@@ -1,0 +1,149 @@
+//
+//  MockData.swift
+//  SweetSpot
+//
+//  Created by morealcode on 28/07/2026.
+//
+
+import Foundation
+
+enum MockData {
+
+    // Store complet
+    static func makeStore() -> AppStore {
+        let currentUser = User(
+            name: "Ambre",
+            preferences: UserPreferences()
+        )
+
+        return AppStore(
+            currentUser: currentUser,
+            groups: [
+                makeProjectGroup(),
+                makeFriendsGroup(),
+            ]
+        )
+    }
+
+    // Groupe projet iOS
+    static func makeProjectGroup() -> MeetupGroup {
+        let ambre = Participant(
+            name: "Ambre",
+            location: GeoPoint(
+                latitude: 48.8566,
+                longitude: 2.3522
+            ),
+            transportMode: .subway,
+            travelTime: 18 * 60,
+            hasVoted: true
+        )
+
+        let lucas = Participant(
+            name: "Lucas",
+            location: GeoPoint(
+                latitude: 48.8757,
+                longitude: 2.3590
+            ),
+            transportMode: .bicycle,
+            travelTime: 15 * 60,
+            hasVoted: false
+        )
+
+        let sushiPlace = Place(
+            name: "Sushi One",
+            address: "12 rue du Temple, Paris",
+            location: GeoPoint(
+                latitude: 48.8615,
+                longitude: 2.3540
+            ),
+            category: .sushi,
+            rating: 4.6,
+            priceLevel: 2,
+        )
+
+        let barPlace = Place(
+            name: "Central Bar",
+            address: "8 rue de Bretagne, Paris",
+            location: GeoPoint(
+                latitude: 48.8630,
+                longitude: 2.3600
+            ),
+            category: .bar,
+            rating: 4.3,
+            priceLevel: 2,
+        )
+
+        let event = MeetupEvent(
+            name: "Déjeuner de groupe",
+            date: Date.now.addingTimeInterval(86_400),
+            meetingZone: MeetingZone(
+                center: GeoPoint(
+                    latitude: 48.8610,
+                    longitude: 2.3550
+                ),
+                polygon: [
+                    GeoPoint(latitude: 48.8570, longitude: 2.3480),
+                    GeoPoint(latitude: 48.8650, longitude: 2.3480),
+                    GeoPoint(latitude: 48.8650, longitude: 2.3620),
+                    GeoPoint(latitude: 48.8570, longitude: 2.3620),
+                ]
+            ),
+            suggestedPlaces: [
+                sushiPlace,
+                barPlace,
+            ],
+            votes: [
+                ambre.id: sushiPlace.id
+            ],
+            finalPlaceID: nil,
+        )
+
+        return MeetupGroup(
+            name: "Projet iOS",
+            invitationCode: "IOS2026",
+            participants: [
+                ambre,
+                lucas,
+            ],
+            event: event
+        )
+    }
+
+    // Groupe amis
+    static func makeFriendsGroup() -> MeetupGroup {
+        let ambre = Participant(
+            name: "Ambre",
+            location: nil,
+            transportMode: .bus,
+            travelTime: nil,
+            hasVoted: false
+        )
+
+        let guillaume = Participant(
+            name: "Guillaume",
+            location: nil,
+            transportMode: .car,
+            travelTime: nil,
+            hasVoted: false
+        )
+
+        let event = MeetupEvent(
+            name: "Sortie samedi",
+            date: Date.now.addingTimeInterval(172_800),
+            meetingZone: nil,
+            suggestedPlaces: [],
+            votes: [:],
+            finalPlaceID: nil,
+        )
+
+        return MeetupGroup(
+            name: "Amis",
+            invitationCode: "AMIS2026",
+            participants: [
+                ambre,
+                guillaume,
+            ],
+            event: event
+        )
+    }
+}
