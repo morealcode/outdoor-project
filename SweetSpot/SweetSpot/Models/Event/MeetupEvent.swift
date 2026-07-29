@@ -12,6 +12,8 @@ struct MeetupEvent: Identifiable {
 
     var name: String
     var date: Date
+    
+    var invitationLink: String
 
     var meetingZone: MeetingZone?
     var suggestedPlaces: [Place]
