@@ -35,6 +35,7 @@ enum MockData {
             ),
             transportMode: .subway,
             travelTime: 18 * 60,
+            response: .attending,
             hasVoted: true
         )
 
@@ -46,6 +47,7 @@ enum MockData {
             ),
             transportMode: .bicycle,
             travelTime: 15 * 60,
+            response: .pending,
             hasVoted: false
         )
 
@@ -76,6 +78,7 @@ enum MockData {
         let event = MeetupEvent(
             name: "Déjeuner de groupe",
             date: Date.now.addingTimeInterval(86_400),
+            invitationLink: "",
             meetingZone: MeetingZone(
                 center: GeoPoint(
                     latitude: 48.8610,

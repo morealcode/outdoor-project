@@ -15,5 +15,6 @@ struct Participant: Identifiable {
     var transportMode: TransportMode
     var travelTime: TimeInterval?
 
+    var response: ParticipantResponse
     var hasVoted: Bool
 }
