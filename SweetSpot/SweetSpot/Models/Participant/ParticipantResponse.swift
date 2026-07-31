@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum ParticipantResponse: String, CaseIterable, Identifiable {
     
@@ -29,16 +30,16 @@ enum ParticipantResponse: String, CaseIterable, Identifiable {
         }
     }
     
-    var colorName: String {
+    var colorName: Color {
         switch self {
         case .attending:
-            return "Green"
+            return Color(.accentGreen)
         case .pending:
-            return "Orange"
+            return Color(.accentOrange)
         case .maybe:
-            return "Blue"
+            return Color(.accentBlue)
         case .unavailable:
-            return "Red"
+            return Color(.red)
         }
     }
     

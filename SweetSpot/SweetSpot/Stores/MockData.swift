@@ -119,6 +119,7 @@ enum MockData {
             location: nil,
             transportMode: .bus,
             travelTime: nil,
+            response: .attending,
             hasVoted: false
         )
 
@@ -127,12 +128,14 @@ enum MockData {
             location: nil,
             transportMode: .car,
             travelTime: nil,
+            response: .pending,
             hasVoted: false
         )
 
         let event = MeetupEvent(
             name: "Sortie samedi",
             date: Date.now.addingTimeInterval(172_800),
+            invitationLink: "",
             meetingZone: nil,
             suggestedPlaces: [],
             votes: [:],
