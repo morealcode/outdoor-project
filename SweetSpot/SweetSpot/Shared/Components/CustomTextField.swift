@@ -21,11 +21,12 @@ struct CustomTextField: View {
                 .font(.headline)
             
             TextField(placeholder, text: $text)
+                .foregroundStyle(.secondary)
         }
         .padding()
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 20))
-        .shadow(radius: 3)
+        .shadow(color: .black.opacity(0.1), radius: 8)
     }
 }
 

@@ -13,6 +13,8 @@ struct PrimaryButton: View {
     let systemImage: String?
     let action: () -> Void
     
+    var fullWidth: Bool = true
+    
     var body: some View {
         
         Button(action: action) {
@@ -26,7 +28,8 @@ struct PrimaryButton: View {
                 }
             }
             .foregroundStyle(.white)
-            .frame(width: 320, height: 49)
+            .frame(maxWidth: fullWidth ? .infinity : nil)
+            .frame(height: 49)
             .background(
                 LinearGradient(
                     colors: [

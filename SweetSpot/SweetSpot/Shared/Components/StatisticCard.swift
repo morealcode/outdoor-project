@@ -16,7 +16,7 @@ struct StatisticCard: View {
     
     var body: some View {
         
-        VStack(spacing: 10) {
+        VStack(spacing: 4) {
             Image(systemName: icon)
                 .font(.title3)
                 .foregroundStyle(iconColor)
@@ -32,7 +32,7 @@ struct StatisticCard: View {
         .frame(height: 110)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 3)
+        .shadow(color: .black.opacity(0.1), radius: 8)
     }
 }
 

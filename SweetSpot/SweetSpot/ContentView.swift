@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Environment(AppStore.self) private var store
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            
+            NewEventView(groupID: UUID())
+                .tabItem {
+                    Label("Acceuil", systemImage: "house")
+                        .environment(\.symbolVariants, .none)
+                }
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
+        .environment(MockData.makeStore())
 }

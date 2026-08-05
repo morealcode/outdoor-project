@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct SweetSpotApp: App {
+    
     @State private var store = MockData.makeStore()
 
     var body: some Scene {

@@ -11,11 +11,16 @@ struct InfoBanner: View {
     
     var body: some View {
         
-        HStack(spacing: 20) {
+        HStack {
             Image(systemName: "lock.fill")
+                .font(.title2)
+            
+            Spacer()
             
             Text("Seules les personnes avec ce lien pourront rejoindre et voir les détails de l’évènement.")
                 .font(.footnote)
+            
+            Spacer()
         }
         .foregroundStyle(Color(.accent))
         .padding()
