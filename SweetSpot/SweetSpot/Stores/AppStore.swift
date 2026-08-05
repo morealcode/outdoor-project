@@ -25,3 +25,26 @@ final class AppStore {
         self.groups = groups
     }
 }
+
+extension AppStore {
+    
+    func createEvent(_ event: MeetupEvent, for groupID: UUID) {
+        guard let index = groups.firstIndex(where: {
+            $0.id == groupID
+        }) else {
+            return
+        }
+        
+        groups[index].event = event
+    }
+    
+    func updateEvent(_ event: MeetupEvent, for groupID: UUID) {
+        guard let index = groups.firstIndex(where: {
+            $0.id == groupID
+        }) else {
+            return
+        }
+        
+        groups[index].event = event
+    }
+}

@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct GroupView: View {
+    @Environment(AppStore.self) private var store
+    
     @State private var viewModel: GroupViewModel
-
+    @State private var selectedTab = 0
+    @State private var showEditEvent =  false
+    
     init(
         store: AppStore,
         groupID: UUID
@@ -23,64 +27,130 @@ struct GroupView: View {
     }
 
     var body: some View {
-        Group {
-            if let group = viewModel.group {
-                List {
-                    Section("Événement") {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(group.event.name)
-                                .font(.headline)
-
-                            Text(
-                                group.event.date.formatted(
-                                    date: .long,
-                                    time: .shortened
-                                )
-                            )
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        }
-                    }
-
-                    Section("Participants") {
-                        ForEach(viewModel.participants) { participant in
-                            HStack(spacing: 12) {
-                                Image(
-                                    systemName: participant
-                                        .transportMode
-                                        .systemImage
-                                )
-                                .frame(width: 24)
-
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(participant.name)
-                                        .font(.body)
-
-                                    Text(participant.transportMode.rawValue)
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                }
-
-                                Spacer()
-
-                                if let travelTime = participant.travelTime {
-                                    Text("\(Int(travelTime / 60)) min")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-                        }
+        
+        ScrollView {
+            VStack(spacing: 16) {
+                if let event = viewModel.event {
+                    EventCard(event: event) {
+                        showEditEvent = true
                     }
                 }
-                .navigationTitle(group.name)
-            } else {
+                
+                DashboardGrid(viewmodel: viewModel)
+                
+                participantSection
+                bottomButtons
+                
+                PrimaryButton(
+                    title: "Voir les détails de l'évènement",
+                    systemImage: "chevron.right"
+                ) {
+                    
+                }
+            }
+            .padding()
+        }
+        .navigationTitle(viewModel.group?.name ?? "")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            toolbarMenu
+        }
+    }
+}
+
+private extension GroupView {
+    
+    @ToolbarContentBuilder
+    var toolbarMenu: some ToolbarContent {
+        
+        ToolbarItem(placement: .topBarTrailing) {
+            Menu {
+                Button {
+                    
+                } label: {
+                    Label(
+                        "Copier le code",
+                        systemImage: "doc.on.doc"
+                    )
+                }
+                
+                Button {
+                    
+                } label: {
+                    Label(
+                        "Partager",
+                        systemImage: "square.and.arrow.up"
+                    )
+                }
+
+                Divider()
+                
+                Button {
+                    
+                } label: {
+                    Label(
+                        "Supprimer le groupe",
+                        systemImage: "trash"
+                    )
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+            }
+        }
+    }
+}
+
+private extension GroupView {
+    
+    var participantSection: some View {
+        
+        VStack(spacing: 18) {
+            SegmentedPicker(selection: $selectedTab)
+            
+            if selectedTab == 0 {
+                LazyVStack(spacing: 12) {
+                    ForEach(viewModel.participants) {
+                        ParticipantRow(participant: $0)
+                    }
+                }
+            }
+            else {
                 ContentUnavailableView(
-                    "Groupe introuvable",
-                    systemImage: "person.3.fill",
+                    "Activité",
+                    systemImage: "fork.knife",
                     description: Text(
-                        "Ce groupe n’existe pas dans le store."
+                        "Cette partie sera développée prochainement"
                     )
                 )
+            }
+        }
+    }
+}
+
+private extension GroupView {
+    
+    var bottomButtons: some View {
+        
+        HStack(spacing: 12) {
+            PrimaryButton(
+                title: "Inviter",
+                systemImage: "person.badge.plus"
+            ) {
+                
+            }
+            
+            PrimaryButton(
+                title: "Relancer",
+                systemImage: "paperplane.fill"
+            ) {
+                
+            }
+            
+            PrimaryButton(
+                title: "Carte",
+                systemImage: "map.fill"
+            ) {
+                
             }
         }
     }
