@@ -21,6 +21,7 @@ enum MockData {
             groups: [
                 makeProjectGroup(),
                 makeFriendsGroup(),
+                makeDinnerGroup(),
             ]
         )
     }
@@ -148,6 +149,91 @@ enum MockData {
             participants: [
                 ambre,
                 guillaume,
+            ],
+            event: event
+        )
+    }
+    
+    // Groupe dîner
+    static func makeDinnerGroup() -> MeetupGroup {
+
+        let alice = Participant(
+            name: "Alice",
+            location: GeoPoint(
+                latitude: 48.8750,
+                longitude: 2.3350
+            ),
+            transportMode: .walking,
+            travelTime: 18 * 60,
+            response: .attending,
+            hasVoted: true
+        )
+
+        let thomas = Participant(
+            name: "Thomas",
+            location: GeoPoint(
+                latitude: 48.8740,
+                longitude: 2.3560
+            ),
+            transportMode: .bus,
+            travelTime: 22 * 60,
+            response: .attending,
+            hasVoted: true
+        )
+
+        let julie = Participant(
+            name: "Julie",
+            location: GeoPoint(
+                latitude: 48.8660,
+                longitude: 2.3250
+            ),
+            transportMode: .car,
+            travelTime: 15 * 60,
+            response: .maybe,
+            hasVoted: false
+        )
+
+        let lucas = Participant(
+            name: "Lucas",
+            location: GeoPoint(
+                latitude: 48.8580,
+                longitude: 2.3520
+            ),
+            transportMode: .bicycle,
+            travelTime: 20 * 60,
+            response: .pending,
+            hasVoted: true
+        )
+
+        let event = MeetupEvent(
+            name: "Dîner à Paris",
+            date: Date.now.addingTimeInterval(86_400),
+            invitationLink: "",
+            meetingZone: MeetingZone(
+                center: GeoPoint(
+                    latitude: 48.8656,
+                    longitude: 2.3410
+                ),
+                polygon: [
+                    GeoPoint(latitude: 48.8550, longitude: 2.3200),
+                    GeoPoint(latitude: 48.8780, longitude: 2.3200),
+                    GeoPoint(latitude: 48.8780, longitude: 2.3600),
+                    GeoPoint(latitude: 48.8550, longitude: 2.3600),
+                ]
+            ),
+            suggestedPlaces: [],
+            votes: [:],
+            finalPlaceID: nil
+        )
+
+        return MeetupGroup(
+            name: "Dîner Paris",
+            invitationCode: "DINER2026",
+            participants: [
+                alice,
+                thomas,
+                julie,
+                lucas,
             ],
             event: event
         )

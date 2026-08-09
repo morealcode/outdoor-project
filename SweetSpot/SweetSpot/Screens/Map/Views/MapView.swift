@@ -90,6 +90,7 @@ struct MeetingZoneView: View {
             )
         )
     }
+    
     var body: some View {
         ZStack(alignment: .bottom) {
 
