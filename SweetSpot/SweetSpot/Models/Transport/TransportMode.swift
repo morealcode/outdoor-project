@@ -12,6 +12,7 @@ enum TransportMode: String, CaseIterable, Identifiable {
     case bicycle = "Bicycle"
     case bus = "Bus"
     case subway = "Subway"
+    case walking = "Walking"
 
     var id: Self { self }
 
@@ -25,6 +26,8 @@ enum TransportMode: String, CaseIterable, Identifiable {
             return "bus.fill"
         case .subway:
             return "tram.fill"
+        case .walking:
+            return "figure.walk"
         }
     }
 }

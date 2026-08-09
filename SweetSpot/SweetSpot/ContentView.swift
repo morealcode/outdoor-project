@@ -8,18 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+
     @Environment(AppStore.self) private var store
-    
+
     var body: some View {
         TabView {
-            
-            NewEventView(groupID: UUID())
-                .tabItem {
-                    Label("Acceuil", systemImage: "house")
-                        .environment(\.symbolVariants, .none)
-                }
+            Tab("Créer", systemImage: "party.popper.fill") {
+                NewEventView(groupID: UUID())
+            }
+
+            Tab("Groupes", systemImage: "person.3.fill") {
+                GroupList()
+            }
+
+            Tab("Préférences", systemImage: "gearshape.fill") {
+                PreferencesView()
+            }
         }
+        .environment(\.symbolVariants, .none)
     }
 }
 

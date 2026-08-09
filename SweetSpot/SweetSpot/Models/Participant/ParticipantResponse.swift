@@ -20,7 +20,7 @@ enum ParticipantResponse: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .attending:
-            return "À répondu "
+            return "À répondu"
         case .pending:
             return "En attente"
         case .maybe:
