@@ -11,6 +11,9 @@ struct UserPreferences {
     var savedAddresses: [SavedAddress] = []
     var homeAddress: SavedAddress?
     var workAddress: SavedAddress?
-    var favoriteTransportModes: [TransportMode] = []
+    var favoriteTransportModes: TransportMode = .bus
     var favoritePlaceCategories: [PlaceCategory] = []
+    // TODO: - Vérifier si le type de données est correct
+    // ça peut être en heure
+    var travelTime: Int?
 }
