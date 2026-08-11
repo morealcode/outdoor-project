@@ -12,7 +12,7 @@ struct ProfileOnboardingView: View {
 
     @State private var username = ""
     @State private var home = ""
-    @State private var transport: TransportMode = .bus
+    @State private var transport: TransportMode = .transport
     @State private var travelTime = 30
 
     private var onboardingVM: OnboardingViewModel {

@@ -10,8 +10,7 @@ import Foundation
 enum TransportMode: String, CaseIterable, Identifiable {
     case car = "Car"
     case bicycle = "Bicycle"
-    case bus = "Bus"
-    case subway = "Subway"
+    case transport = "Transport"
     case walking = "Walking"
 
     var id: Self { self }
@@ -22,10 +21,8 @@ enum TransportMode: String, CaseIterable, Identifiable {
             return "car.fill"
         case .bicycle:
             return "bicycle"
-        case .bus:
+        case .transport:
             return "bus.fill"
-        case .subway:
-            return "tram.fill"
         case .walking:
             return "figure.walk"
         }

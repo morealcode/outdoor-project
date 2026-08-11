@@ -36,7 +36,7 @@ struct MeetingZoneView: View {
                 latitude: 48.8740,
                 longitude: 2.3560
             ),
-            transportMode: .bus,
+            transportMode: .transport,
             travelTime: 22 * 60,
             response: .attending,
             hasVoted: true

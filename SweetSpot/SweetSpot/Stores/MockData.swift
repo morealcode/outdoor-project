@@ -34,7 +34,7 @@ enum MockData {
                 latitude: 48.8566,
                 longitude: 2.3522
             ),
-            transportMode: .subway,
+            transportMode: .transport,
             travelTime: 18 * 60,
             response: .attending,
             hasVoted: true
@@ -118,7 +118,7 @@ enum MockData {
         let ambre = Participant(
             name: "Ambre",
             location: nil,
-            transportMode: .bus,
+            transportMode: .transport,
             travelTime: nil,
             response: .attending,
             hasVoted: false
@@ -175,7 +175,7 @@ enum MockData {
                 latitude: 48.8740,
                 longitude: 2.3560
             ),
-            transportMode: .bus,
+            transportMode: .transport,
             travelTime: 22 * 60,
             response: .attending,
             hasVoted: true

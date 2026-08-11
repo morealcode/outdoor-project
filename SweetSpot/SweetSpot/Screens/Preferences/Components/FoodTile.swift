@@ -9,15 +9,25 @@ import SwiftUI
 
 struct FoodTile: View {
     let food: CuisineType
-    @State private var isSelected = false
+
+    @Environment(AppStore.self) private var store
+
+    private var preferencesViewModel: PreferencesViewModel {
+        PreferencesViewModel(store: store)
+    }
+
+    var isSelected: Bool {
+        store.currentUser.preferences.favoritesCuisine[food] ?? false
+    }
+
     var body: some View {
         Button {
-            isSelected.toggle()
+            preferencesViewModel.changeCuisineFavorite(food)
         } label: {
             HStack {
                 Text(food.emoji)
                     .opacity(isSelected ? 1.0 : 0.5)
-                Text(food.name)
+                Text(food.rawValue)
                     .font(.caption)
                     .foregroundStyle(
                         isSelected ? .black : .secondary.opacity(0.5)
@@ -36,9 +46,13 @@ struct FoodTile: View {
 }
 
 #Preview {
-    FoodTile(food: CuisineType.arrOfCuisineType[0])
+    let store = MockData.makeStore()
+    FoodTile(food: .francais)
+        .environment(store)
 }
-
-#Preview {
-    PreferencesView()
-}
+//
+//#Preview {
+//    let store = MockData.makeStore()
+//    PreferencesView()
+//        .environment(store)
+//}
