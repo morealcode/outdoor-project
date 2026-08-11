@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct BudgetRow: View {
-    @State private var budgetSelected = 0
-    let budgetArr = [20,40,60,80,100]
+    @Environment(AppStore.self) private var store
+
+    var budgetSelected: Int {
+        store.currentUser.preferences.budget ?? 0
+    }
+    
+    let budgetArr = [20, 40, 60, 80, 100]
+
     var body: some View {
         VStack {
             HStack {
@@ -21,11 +27,11 @@ struct BudgetRow: View {
 
             HStack {
                 ForEach(budgetArr, id: \.self) { budget in
-                    BudgetTile(budgetSelected: $budgetSelected, budget: budget)
+                    BudgetTile(budget: budget)
                 }
             }
         }
-        .frame(maxWidth: .infinity,alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal)
         .padding(.vertical, 5)
 
@@ -33,10 +39,11 @@ struct BudgetRow: View {
 }
 
 #Preview {
+    let store = MockData.makeStore()
     BudgetRow()
+        .environment(store)
 }
 
-
-#Preview {
-    PreferencesView()
-}
+//#Preview {
+//    PreferencesView()
+//}
