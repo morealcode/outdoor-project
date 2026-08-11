@@ -32,15 +32,31 @@ struct PreferencesViewModel {
 
     func changeCuisineFavorite(_ cuisineType: CuisineType) {
         store.currentUser.preferences.favoritesCuisine[cuisineType]?.toggle()
-        print("Change favorite cuisine", cuisineType, "to", store.currentUser.preferences.favoritesCuisine[cuisineType] ?? "error")
+        print(
+            "Change favorite cuisine",
+            cuisineType,
+            "to",
+            store.currentUser.preferences.favoritesCuisine[cuisineType]
+                ?? "error"
+        )
     }
-    
-    func changeBudget(_ budget: Int){
+
+    func changeBudget(_ budget: Int) {
         store.currentUser.preferences.budget = budget
         print("Change budget to", budget)
     }
-    func changeTime(_ time: Int){
+    func changeTime(_ time: Int) {
         store.currentUser.preferences.favoriteTravelTime = time
         print("Change time to", time)
+    }
+
+    func changeDaysFavorite(_ day: Days) {
+        store.currentUser.preferences.availableDays[day]?.toggle()
+        print(
+            "Change day favorite",
+            day,
+            "to",
+            store.currentUser.preferences.availableDays[day] ?? "error"
+        )
     }
 }

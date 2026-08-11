@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DisponibilityRow: View {
-    var arrOfDay = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"]
+
     var body: some View {
         VStack {
             HStack {
@@ -17,8 +17,8 @@ struct DisponibilityRow: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            HStack(spacing: 10){
-                ForEach(arrOfDay, id: \.self) { day in
+            HStack(spacing: 10) {
+                ForEach(Days.allCases) { day in
                     DayTile(day: day)
                 }
             }
@@ -30,9 +30,7 @@ struct DisponibilityRow: View {
 }
 
 #Preview {
+    let store = MockData.makeStore()
     DisponibilityRow()
-}
-
-#Preview {
-    PreferencesView()
+        .environment(store)
 }
