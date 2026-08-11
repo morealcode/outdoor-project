@@ -92,5 +92,8 @@ struct OnboardingView: View {
 }
 
 #Preview {
+    let store = MockData.makeStore()
+    
     OnboardingView()
+    .environment(store)
 }

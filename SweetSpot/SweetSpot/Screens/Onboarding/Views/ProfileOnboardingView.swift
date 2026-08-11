@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct ProfileOnboardingView: View {
+    @Environment(AppStore.self) private var store
+
     @State private var username = ""
     @State private var home = ""
     @State private var transport: TransportMode = .bus
     @State private var travelTime = 30
+
+    private var onboardingVM: OnboardingViewModel {
+        OnboardingViewModel(store: store)
+    }
 
     let onContinue: () -> Void
 
@@ -87,17 +93,24 @@ struct ProfileOnboardingView: View {
 
     private func saveProfile() {
         print(username)
-        print(home)
-        print(transport)
-        print(travelTime)
+        onboardingVM.updatePseudo(username)
 
-        // Ici tu pourras ensuite enregistrer
-        // les données dans ton AppStore.
+        print(home)
+        onboardingVM.updateHome(home)
+
+        print(transport)
+        onboardingVM.updateTransport(transport)
+
+        print(travelTime)
+        onboardingVM.updateTravelTime(travelTime)
     }
 }
 
 #Preview {
+    let store = MockData.makeStore()
+
     ProfileOnboardingView {
         print("Continuer")
     }
+    .environment(store)
 }

@@ -11,5 +11,5 @@ struct SavedAddress: Identifiable {
     let id: UUID = UUID()
     var name: String
     var address: String
-    var location: GeoPoint
+    var location: GeoPoint?
 }
