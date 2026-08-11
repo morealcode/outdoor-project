@@ -9,23 +9,44 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @Environment(AppStore.self) private var store
+    @AppStorage("hasSeenOnboarding")
+    private var hasSeenOnboarding = false
+
+    @Environment(AppStore.self)
+    private var store
+
+    @State private var didResetOnboarding = false
 
     var body: some View {
-        TabView {
-            Tab("Créer", systemImage: "party.popper.fill") {
-                NewEventView(groupID: UUID())
-            }
+        Group {
+            if hasSeenOnboarding {
+                TabView {
+                    Tab("Créer", systemImage: "party.popper.fill") {
+                        NewEventView(groupID: UUID())
+                    }
 
-            Tab("Groupes", systemImage: "person.3.fill") {
-                GroupList()
-            }
+                    Tab("Groupes", systemImage: "person.3.fill") {
+                        GroupList()
+                    }
 
-            Tab("Préférences", systemImage: "gearshape.fill") {
-                PreferencesView()
+                    Tab("Préférences", systemImage: "gearshape.fill") {
+                        PreferencesView()
+                    }
+                }
+                .environment(\.symbolVariants, .none)
+
+            } else {
+                OnboardingView()
             }
         }
-        .environment(\.symbolVariants, .none)
+        .onAppear {
+            #if DEBUG
+                if !didResetOnboarding {
+                    hasSeenOnboarding = false
+                    didResetOnboarding = true
+                }
+            #endif
+        }
     }
 }
 
