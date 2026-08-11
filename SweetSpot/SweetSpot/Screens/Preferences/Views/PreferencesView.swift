@@ -8,11 +8,26 @@
 import SwiftUI
 
 struct PreferencesView: View {
+    @State var homeSelected = false
+    @State var workSelected = false
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack(spacing: 15){
+                Header()
+                AdressRow(homeSelected: $homeSelected, workSelected: $workSelected)
+                TransportRow()
+                BudgetTravelView()
+                FoodRow()
+                DisponibilityRow()
+            }
+        }
+        .padding()
+        .background(.bg)
+        
     }
 }
 
 #Preview {
     PreferencesView()
 }
+

@@ -7,12 +7,21 @@
 
 import SwiftUI
 
-struct SummaryView: View {
+struct RecapitulatifView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack(spacing: 20){
+                DestinationRow()
+                VoteRow()
+                AttendeesRow()
+            }
+            .padding(.horizontal)
+        }
+        .background(.bg)
+        
     }
 }
 
 #Preview {
-    SummaryView()
+    RecapitulatifView()
 }
