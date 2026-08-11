@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct TimeRow: View {
+    @Environment(AppStore.self) private var store
+    
+    var timeSelected: Int {
+        store.currentUser.preferences.favoriteTravelTime ?? 0
+    }
+    
     let timeArr = [15, 20, 30, 45, 60]
-    @State private var timeSelected = 0
+    
     var body: some View {
         VStack {
             HStack {
@@ -21,7 +27,7 @@ struct TimeRow: View {
             
             HStack {
                 ForEach(timeArr, id: \.self) { time in
-                    TimeTile(timeSelected: $timeSelected, time: time)
+                    TimeTile(time: time)
                 }
             }
         }
@@ -32,9 +38,11 @@ struct TimeRow: View {
 }
 
 #Preview {
+    let store = MockData.makeStore()
     TimeRow()
+        .environment(store)
 }
 
-#Preview {
-    PreferencesView()
-}
+//#Preview {
+//    PreferencesView()
+//}

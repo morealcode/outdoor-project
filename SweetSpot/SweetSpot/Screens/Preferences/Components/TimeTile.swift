@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct TimeTile: View {
-    @Binding var timeSelected: Int
+    @Environment(AppStore.self) private var store
+
+    private var preferencesViewModel: PreferencesViewModel {
+        PreferencesViewModel(store: store)
+    }
+
+    var timeSelected: Int {
+        store.currentUser.preferences.favoriteTravelTime ?? 0
+    }
+    
     let time: Int
     var body: some View {
         Button {
-            timeSelected = time
+            preferencesViewModel.changeTime(time)
         } label: {
             HStack {
                 Text("\(time)min")
@@ -36,5 +45,7 @@ struct TimeTile: View {
 }
 
 #Preview {
-    TimeTile(timeSelected: .constant(15), time: 15)
+    let store = MockData.makeStore()
+    TimeTile(time: 15)
+        .environment(store)
 }

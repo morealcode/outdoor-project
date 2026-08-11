@@ -39,4 +39,8 @@ struct PreferencesViewModel {
         store.currentUser.preferences.budget = budget
         print("Change budget to", budget)
     }
+    func changeTime(_ time: Int){
+        store.currentUser.preferences.favoriteTravelTime = time
+        print("Change time to", time)
+    }
 }
