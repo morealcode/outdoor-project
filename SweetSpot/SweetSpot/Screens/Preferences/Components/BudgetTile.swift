@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct BudgetTile: View {
-    @Binding var budgetSelected: Int
-    let budget: Int
+
+    @Environment(AppStore.self) private var store
+
+    private var preferencesViewModel: PreferencesViewModel {
+        PreferencesViewModel(store: store)
+    }
+
+    var budgetSelected: Int {
+        store.currentUser.preferences.budget ?? 0
+    }
+
+    var budget: Int
+
     var body: some View {
         Button {
-            budgetSelected = budget
+            preferencesViewModel.changeBudget(budget)
         } label: {
             HStack {
                 Text("\(budget)€")
@@ -35,5 +46,7 @@ struct BudgetTile: View {
 }
 
 #Preview {
-    BudgetTile(budgetSelected: .constant(20), budget: 20)
+    let store = MockData.makeStore()
+    BudgetTile(budget: 20)
+        .environment(store)
 }

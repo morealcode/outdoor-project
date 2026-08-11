@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct TransportTile: View {
+    @Environment(AppStore.self) private var store
+
+    private var preferencesViewModel: PreferencesViewModel {
+        PreferencesViewModel(store: store)
+    }
+
     let iconTransport: String
     let nameTransport: String
     var selected: Bool
