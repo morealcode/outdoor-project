@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(AppStore.self) private var store
+
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
                     LabelUIKitRepresentable(text: "Bienvenue")
                         .frame(height: 15)
-                    Text("Guillaume")
+                    Text(store.currentUser.name)
                         .font(.title)
                         .fontWeight(.medium)
                 }
@@ -36,18 +38,21 @@ struct HomeView: View {
 
 struct LabelUIKitRepresentable: UIViewRepresentable {
     let text: String
+
     func makeUIView(context: Context) -> UILabel {
         let label = UILabel()
         label.text = text
         label.font = UIFont.boldSystemFont(ofSize: 35)
         return label
     }
-    
+
     func updateUIView(_ uiView: UILabel, context: Context) {
-        
+
     }
 }
 
 #Preview {
+    let store = MockData.makeStore()
     HomeView()
+        .environment(store)
 }

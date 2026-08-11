@@ -21,8 +21,9 @@ struct ContentView: View {
         Group {
             if hasSeenOnboarding {
                 TabView {
-                    Tab("Créer", systemImage: "party.popper.fill") {
-                        NewEventView(groupID: UUID())
+                    Tab("Home", systemImage: "party.popper.fill") {
+                        HomeView()
+                        // NewEventView(groupID: UUID())
                     }
 
                     Tab("Groupes", systemImage: "person.3.fill") {
