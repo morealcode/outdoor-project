@@ -12,9 +12,8 @@ struct HomeView: View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Bienvenue")
-                        .font(.largeTitle)
-                        .bold()
+                    LabelUIKitRepresentable(text: "Bienvenue")
+                        .frame(height: 15)
                     Text("Guillaume")
                         .font(.title)
                         .fontWeight(.medium)
@@ -32,6 +31,20 @@ struct HomeView: View {
         }
         .padding()
         .background(.backgroundApp)
+    }
+}
+
+struct LabelUIKitRepresentable: UIViewRepresentable {
+    let text: String
+    func makeUIView(context: Context) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.font = UIFont.boldSystemFont(ofSize: 35)
+        return label
+    }
+    
+    func updateUIView(_ uiView: UILabel, context: Context) {
+        
     }
 }
 
