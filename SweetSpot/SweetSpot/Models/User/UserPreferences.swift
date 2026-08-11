@@ -18,16 +18,8 @@ struct UserPreferences {
     // ça peut être en heure
     var favoriteTravelTime: Int?
     var budget: Int?
-    var favoritesCuisine: [CuisineType: Bool] = [:
-        //        .francais: true
-        //        .japonaise: false,
-        //        .italienne: false,
-        //        .asiatique: false,
-        //        .vegetarien: false,
-        //        .americain: false,
-        //        .fruitsdemer: false,
-        //        .baravin: false,
-    ]
+    var favoritesCuisine: [CuisineType: Bool] = [:]
+    var availableDays: [Days: Bool] = [:]
 
     var isHomeFavorite: Bool {
         return favoriteAddress == .home
@@ -36,6 +28,9 @@ struct UserPreferences {
     init() {
         for cuisine in CuisineType.allCases {
             self.favoritesCuisine[cuisine] = false
+        }
+        for day in Days.allCases {
+            self.availableDays[day] = false
         }
     }
 }
