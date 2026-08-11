@@ -15,21 +15,22 @@ struct OnboardingView: View {
 
     private let pages = [
         OnboardingPage(
-            icon: "hand.wave.fill",
+            image: "onboarding1",
             title: "Bienvenue",
             description:
-                "Découvrez rapidement les fonctionnalités principales de l'application."
+                "Trouvez le point de rencontre parfait avec vos amis. Sweet Spot est votre allié pour des sorties réussies !"
         ),
         OnboardingPage(
-            icon: "sparkles",
+            image: "onboarding2",
             title: "Simple et rapide",
             description:
-                "Accédez facilement à vos contenus et réalisez vos actions principales."
+                "Créez un groupe, un événement, et laissez l’app suggérer des lieux optimaux pour tous les participants."
         ),
         OnboardingPage(
-            icon: "checkmark.circle.fill",
-            title: "C'est parti !",
-            description: "Vous êtes maintenant prêt à utiliser l'application."
+            image: "onboarding4",
+            title: "C'est tout bon !",
+            description:
+                "Votre profil est prêt ! Vous pouvez maintenant créer votre premier événement ou rejoindre un groupe."
         ),
     ]
 
@@ -54,11 +55,19 @@ struct OnboardingView: View {
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(.blue)
                 .foregroundStyle(.white)
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 12)
+                .background(
+                    LinearGradient(
+                        colors: [
+                            Color(.accent),
+                            Color(.accentBlue),
+                        ],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
                 )
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .shadow(color: .black.opacity(0.25), radius: 12, x: 0, y: 0)
             }
             .padding()
         }
@@ -78,45 +87,6 @@ struct OnboardingView: View {
         hasSeenOnboarding = true
     }
 }
-
-// MARK: - Model
-
-struct OnboardingPage {
-    let icon: String
-    let title: String
-    let description: String
-}
-
-// MARK: - Page
-
-struct OnboardingPageView: View {
-    let page: OnboardingPage
-
-    var body: some View {
-        VStack(spacing: 24) {
-            Spacer()
-
-            Image(systemName: page.icon)
-                .font(.system(size: 70))
-                .foregroundStyle(.blue)
-
-            Text(page.title)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .multilineTextAlignment(.center)
-
-            Text(page.description)
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
-
-            Spacer()
-        }
-    }
-}
-
-// MARK: - Preview
 
 #Preview {
     OnboardingView()
