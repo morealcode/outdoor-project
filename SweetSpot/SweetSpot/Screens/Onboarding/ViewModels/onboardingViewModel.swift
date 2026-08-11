@@ -32,6 +32,6 @@ struct OnboardingViewModel {
     }
 
     func updateTravelTime(_ travelTime: Int) {
-        store.currentUser.preferences.travelTime = travelTime
+        store.currentUser.preferences.favoriteTravelTime = travelTime
     }
 }

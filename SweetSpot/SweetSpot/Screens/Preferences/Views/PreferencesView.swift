@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct PreferencesView: View {
-    @State var homeSelected = false
-    @State var workSelected = false
     var body: some View {
         ScrollView {
             VStack(spacing: 15){

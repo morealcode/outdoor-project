@@ -19,4 +19,20 @@ struct PreferencesViewModel {
         print("Change favorite to ", favorite)
         print(store.currentUser.preferences.favoriteAddress)
     }
+
+    func changeFavoriteTransport(_ favorite: TransportMode) {
+        store.currentUser.preferences.favoriteTransportModes = favorite
+        print("Change favorite transport mode to ", favorite)
+        print(store.currentUser.preferences.favoriteTransportModes)
+    }
+
+    func isTransportSelected(transport: TransportMode) -> Bool {
+        store.currentUser.preferences.favoriteTransportModes == transport
+    }
+
+    func changeCuisineFavorite(_ cuisineType: CuisineType) {
+        
+        store.currentUser.preferences.favoritesCuisine[cuisineType]?.toggle()
+        print("Change favorite cuisine", cuisineType, "to", store.currentUser.preferences.favoritesCuisine[cuisineType] ?? "error")
+    }
 }

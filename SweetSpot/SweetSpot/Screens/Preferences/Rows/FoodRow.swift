@@ -5,11 +5,11 @@
 //  Created by Guillaume Richard on 29/07/2026.
 //
 
-import SwiftUI
 import Flow
+import SwiftUI
 
 struct FoodRow: View {
-    var arrOfFood = CuisineType.arrOfCuisineType
+
     var body: some View {
         VStack {
             HStack {
@@ -18,20 +18,24 @@ struct FoodRow: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             HFlow {
-                ForEach(arrOfFood) { cuisine in
+                ForEach(CuisineType.allCases) { cuisine in
                     FoodTile(food: cuisine)
                 }
             }
-          
+
         }
         .padding()
     }
 }
 
 #Preview {
+    let store = MockData.makeStore()
     FoodRow()
+        .environment(store)
 }
 
 #Preview {
+    let store = MockData.makeStore()
     PreferencesView()
+        .environment(store)
 }
