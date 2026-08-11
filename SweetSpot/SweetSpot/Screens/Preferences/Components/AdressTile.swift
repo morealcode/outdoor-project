@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AdressTile: View {
-    @Binding var isSelected: Bool
+//    @Binding var isSelected: Bool
+    var isSelected: Bool
     var iconLeft: String
     var iconRight: String
     var endroit: String
@@ -50,7 +51,7 @@ struct AdressTile: View {
 
 #Preview {
     AdressTile(
-        isSelected: .constant(false),
+        isSelected: false, // .constant(false),
         iconLeft: "house.fill",
         iconRight: "checkmark",
         endroit: "Domicile",

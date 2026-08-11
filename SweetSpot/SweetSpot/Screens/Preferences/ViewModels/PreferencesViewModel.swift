@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+struct PreferencesViewModel {
+    let store: AppStore
+
+    init(store: AppStore) {
+        self.store = store
+    }
+
+    func changeFavoriteAddress(_ favorite: FavoriteAddress) {
+        store.currentUser.preferences.favoriteAddress = favorite
+        print("Change favorite to ", favorite)
+        print(store.currentUser.preferences.favoriteAddress)
+    }
+}
