@@ -22,7 +22,7 @@ struct PreferencesView: View {
             }
         }
         .padding()
-        .background(.bg)
+        .background(.backgroundApp)
         
     }
 }
