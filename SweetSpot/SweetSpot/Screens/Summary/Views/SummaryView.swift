@@ -17,7 +17,7 @@ struct RecapitulatifView: View {
             }
             .padding(.horizontal)
         }
-        .background(.bg)
+        .background(.backgroundApp)
         
     }
 }
