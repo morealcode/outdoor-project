@@ -14,7 +14,7 @@ struct PreferencesView: View {
         ScrollView {
             VStack(spacing: 15){
                 Header()
-                AdressRow(homeSelected: $homeSelected, workSelected: $workSelected)
+                AdressRow()
                 TransportRow()
                 BudgetTravelView()
                 FoodRow()
@@ -28,6 +28,7 @@ struct PreferencesView: View {
 }
 
 #Preview {
+    let store = MockData.makeStore()
     PreferencesView()
+        .environment(store)
 }
-
