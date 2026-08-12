@@ -35,7 +35,7 @@ struct DashboardGrid: View {
             StatisticCard(
                 icon: "minus.circle.fill",
                 iconColor: .red,
-                value: viewmodel.pendingCount,
+                value: viewmodel.unavailableCount,
                 title: "Indisponible")
         }
     }

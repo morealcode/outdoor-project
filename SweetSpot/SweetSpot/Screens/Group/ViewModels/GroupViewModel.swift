@@ -12,6 +12,10 @@ import Observation
 final class GroupViewModel {
     private let store: AppStore
     private let groupID: UUID
+    
+    var id: UUID {
+        groupID
+    }
 
     init(
         store: AppStore,

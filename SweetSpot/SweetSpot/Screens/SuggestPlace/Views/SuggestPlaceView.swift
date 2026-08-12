@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SuggestPlaceView: View {
-    
+
     let lieux: [Lieu] = Lieu.samples
-    
+
     var body: some View {
        
         VStack(spacing:16) {
@@ -22,7 +22,7 @@ struct SuggestPlaceView: View {
                 
                 ForEach(lieux) { lieu in
                     LieuxCardView(lieu: lieu)
-                        .padding(.horizontal,8)
+                        .padding(.horizontal, 8)
                 }
             }
         }
@@ -34,4 +34,3 @@ struct SuggestPlaceView: View {
 #Preview {
     SuggestPlaceView()
 }
-

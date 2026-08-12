@@ -15,8 +15,12 @@ final class NewEventViewModel {
     var selectedDate: Date = .now
     var invitationLink: String = ""
     
+    var isEditing: Bool = false
+    
     var isFormValid: Bool {
-        !eventName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !eventName
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .isEmpty
     }
     
     init() {
@@ -30,6 +34,14 @@ final class NewEventViewModel {
             .uppercased()
         
         invitationLink = "https://sweetspot.app/join/\(code)"
+    }
+    
+    func load(event: MeetupEvent) {
+        isEditing = true
+        
+        eventName = event.name
+        selectedDate = event.date
+        invitationLink = event.invitationLink
     }
     
     func createEvent() -> MeetupEvent {

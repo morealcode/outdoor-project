@@ -12,12 +12,36 @@ struct NewEventView: View {
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
     
-    @State private var viewModel = NewEventViewModel()
+    @State private var viewModel: NewEventViewModel
     
     let groupID: UUID
+    private let eventToEdit: MeetupEvent?
+    
+    init(groupID: UUID) {
+        self.groupID = groupID
+        self.eventToEdit = nil
+        self._viewModel = State(
+            initialValue: NewEventViewModel()
+        )
+    }
+    
+    init(
+        groupID: UUID,
+        event: MeetupEvent
+    ) {
+        self.groupID = groupID
+        self.eventToEdit = event
+        
+        let model = NewEventViewModel()
+        model.load(event: event)
+        
+        self._viewModel = State(
+            initialValue: model
+        )
+    }
     
     var body: some View {
-       
+        
         ScrollView {
             VStack(spacing: 16) {
                 
@@ -25,21 +49,23 @@ struct NewEventView: View {
                 titleSection
                 eventNameField
                 
-                EventDateAndTimeCard()
+                EventDateAndTimeCard(
+                    selectedDate: $viewModel.selectedDate
+                )
                 
-                InvitationLinkCard()
+                InvitationLinkCard(
+                    invitationLink: viewModel.invitationLink
+                )
                 
                 InfoBanner()
                 
                 PrimaryButton(
-                    title: "Créer l'évènement",
+                    title: viewModel.isEditing
+                        ? "Enregistrer les modifications"
+                        : "Créer l'évènement",
                     systemImage: "chevron.right"
                 ) {
-                    let event = viewModel.createEvent()
-                    
-                    store.createEvent(event, for: groupID)
-                    
-                    dismiss()
+                    saveEvent()
                 }
                 .disabled(!viewModel.isFormValid)
             }
@@ -54,8 +80,38 @@ struct NewEventView: View {
 }
 
 private extension NewEventView {
-    var header: some View {
+    
+    func saveEvent() {
         
+        if let event = eventToEdit {
+            
+            var updatedEvent = event
+            
+            updatedEvent.name = viewModel.eventName
+            updatedEvent.date = viewModel.selectedDate
+            
+            store.updateEvent(
+                updatedEvent,
+                for: groupID
+            )
+            
+        } else {
+            
+            let event = viewModel.createEvent()
+            
+            store.createEvent(
+                event,
+                for: groupID
+            )
+        }
+        
+        dismiss()
+    }
+}
+
+private extension NewEventView {
+    
+    var header: some View {
         HStack {
             Button {
                 dismiss()
@@ -64,15 +120,15 @@ private extension NewEventView {
                     .font(.headline)
                     .padding()
             }
-
+            
             Spacer()
         }
     }
 }
 
 private extension NewEventView {
+    
     var illustration: some View {
-        
         Image("newEventHeader")
             .resizable()
             .scaledToFit()
@@ -81,23 +137,32 @@ private extension NewEventView {
 }
 
 private extension NewEventView {
+    
     var titleSection: some View {
-        
         VStack(spacing: 8) {
-            Text("Créer un évènement")
-                .font(.system(size: 38, weight: .bold))
             
-            Text("Planifions le meilleur point de rencontre pour tout le monde.")
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+            Text(
+                viewModel.isEditing
+                    ? "Modifier l'évènement"
+                    : "Créer un évènement"
+            )
+            .font(.system(size: 38, weight: .bold))
+            
+            Text(
+                viewModel.isEditing
+                    ? "Modifiez les informations de votre évènement."
+                    : "Planifions le meilleur point de rencontre pour tout le monde."
+            )
+            .font(.body)
+            .foregroundStyle(.secondary)
+            .multilineTextAlignment(.center)
         }
     }
 }
 
 private extension NewEventView {
+    
     var eventNameField: some View {
-        
         CustomTextField(
             text: $viewModel.eventName,
             title: "Nom de l'évènement",
