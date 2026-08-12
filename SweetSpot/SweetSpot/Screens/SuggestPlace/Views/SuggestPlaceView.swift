@@ -12,11 +12,14 @@ struct SuggestPlaceView: View {
     let lieux: [Lieu] = Lieu.samples
 
     var body: some View {
-
+       
+        VStack(spacing:16) {
+            
         TypeChoiceView()
-            .padding(.horizontal, 8)
+            .padding(.horizontal,8)
+        
         ScrollView {
-            VStack(spacing: 16) {
+                
                 ForEach(lieux) { lieu in
                     LieuxCardView(lieu: lieu)
                         .padding(.horizontal, 8)
