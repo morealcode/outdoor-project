@@ -175,7 +175,7 @@ enum MockData {
         let event = MeetupEvent(
             name: "Déjeuner de groupe",
             date: Date.now.addingTimeInterval(86_400),
-            invitationLink: "",
+            invitationLink: "https://sweetspot.app/join/DIN2026A",
             meetingZone: MeetingZone(
                 center: GeoPoint(
                     latitude: 48.8610,
@@ -240,7 +240,7 @@ enum MockData {
         let event = MeetupEvent(
             name: "Sortie samedi",
             date: Date.now.addingTimeInterval(172_800),
-            invitationLink: "",
+            invitationLink:  "https://sweetspot.app/join/AMIS2026",
             meetingZone: nil,
             suggestedPlaces: [],
             votes: [:],
@@ -312,7 +312,7 @@ enum MockData {
         let event = MeetupEvent(
             name: "Dîner à Paris",
             date: Date.now.addingTimeInterval(86_400),
-            invitationLink: "",
+            invitationLink: "https://sweetspot.app/join/DINER026",
             meetingZone: MeetingZone(
                 center: GeoPoint(
                     latitude: 48.8656,

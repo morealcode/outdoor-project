@@ -146,7 +146,7 @@ private extension NewEventView {
                     ? "Modifier l'évènement"
                     : "Créer un évènement"
             )
-            .font(.system(size: 38, weight: .bold))
+            .font(.system(size: 34, weight: .bold))
             
             Text(
                 viewModel.isEditing
@@ -179,4 +179,12 @@ private extension NewEventView {
         NewEventView(groupID: UUID())
     }
     .environment(store)
+}
+
+
+#Preview {
+    let store = MockData.makeStore()
+    GroupList()
+        .environment(store)
+
 }

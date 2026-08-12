@@ -51,5 +51,7 @@ struct InvitationLinkCard: View {
 }
 
 #Preview {
-    InvitationLinkCard(invitationLink: "https://sweetspot.app/join/ABC12345")
+    let store = MockData.makeStore()
+    let event = store.groups.first!.event
+    InvitationLinkCard(invitationLink: event.invitationLink)
 }
