@@ -82,7 +82,7 @@ enum MockData {
                 latitude: 48.8518,
                 longitude: 2.3585
             ),
-            transportMode: .bus,
+            transportMode: .transport,
             travelTime: 20 * 60,
             response: .maybe,
             hasVoted: false
@@ -106,7 +106,7 @@ enum MockData {
                 latitude: 48.8645,
                 longitude: 2.3445
             ),
-            transportMode: .subway,
+            transportMode: .transport,
             travelTime: 16 * 60,
             response: .attending,
             hasVoted: false
@@ -142,7 +142,7 @@ enum MockData {
                 latitude: 48.8600,
                 longitude: 2.3690
             ),
-            transportMode: .bus,
+            transportMode: .transport,
             travelTime: 17 * 60,
             response: .maybe,
             hasVoted: false
