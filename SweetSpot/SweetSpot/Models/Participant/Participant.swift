@@ -17,4 +17,5 @@ struct Participant: Identifiable {
 
     var response: ParticipantResponse
     var hasVoted: Bool
+    var locationVoted: UUID?
 }

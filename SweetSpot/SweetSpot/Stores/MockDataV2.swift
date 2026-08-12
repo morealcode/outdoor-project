@@ -7,16 +7,16 @@
 
 import Foundation
 
-enum MockData {
+enum MockDataV2 {
 
     // Store complet
-    static func makeStore() -> AppStore {
+    static func makeStore() async -> AppStore {
         let currentUser = User(
             name: "Ambre",
             preferences: UserPreferences()
         )
 
-        return AppStore(
+        return await AppStore(
             currentUser: currentUser,
             groups: [
                 makeProjectGroup(),
@@ -27,7 +27,7 @@ enum MockData {
     }
 
     // Groupe projet iOS
-    static func makeProjectGroup() -> MeetupGroup {
+    static func makeProjectGroup() async -> MeetupGroup {
         let ambre = Participant(
             name: "Ambre",
             location: GeoPoint(
@@ -198,9 +198,26 @@ enum MockData {
             finalPlaceID: nil,
         )
 
-        return MeetupGroup(
+        //        return MeetupGroup(
+        //            name: "Diner potin",
+        ////            invitationCode: "DIN2026",
+        //            participants: [
+        //                ambre,
+        //                lucas,
+        //                chloe,
+        //                maxime,
+        //                clara,
+        //                hugo,
+        //                lea,
+        //                nathan,
+        //                emma,
+        //                theo,
+        //            ],
+        //            event: event
+        //        )
+
+        let group = await MeetupGroup.create(
             name: "Diner potin",
-            //            invitationCode: "DIN2026",
             participants: [
                 ambre,
                 lucas,
@@ -213,12 +230,18 @@ enum MockData {
                 emma,
                 theo,
             ],
-            event: event
+            event: event,
         )
+
+        print("\n\n")
+        print(group.event.meetingZone?.center ?? "nothing")
+        print(group.event.suggestedPlaces)
+
+        return group
     }
 
     // Groupe amis
-    static func makeFriendsGroup() -> MeetupGroup {
+    static func makeFriendsGroup() async -> MeetupGroup {
         let ambre = Participant(
             name: "Ambre",
             location: nil,
@@ -247,19 +270,28 @@ enum MockData {
             finalPlaceID: nil,
         )
 
-        return MeetupGroup(
+        //        return MeetupGroup(
+        //            name: "Amis",
+        //            //            invitationCode: "AMIS2026",
+        //            participants: [
+        //                ambre,
+        //                guillaume,
+        //            ],
+        //            event: event
+        //        )
+
+        return await MeetupGroup.create(
             name: "Amis",
-            //            invitationCode: "AMIS2026",
             participants: [
                 ambre,
                 guillaume,
             ],
-            event: event
+            event: event,
         )
     }
 
     // Groupe dîner
-    static func makeDinnerGroup() -> MeetupGroup {
+    static func makeDinnerGroup() async -> MeetupGroup {
 
         let alice = Participant(
             name: "Alice",
@@ -330,16 +362,27 @@ enum MockData {
             finalPlaceID: nil
         )
 
-        return MeetupGroup(
+        //        return MeetupGroup(
+        //            name: "Dîner Paris",
+        //            //            invitationCode: "DINER2026",
+        //            participants: [
+        //                alice,
+        //                thomas,
+        //                julie,
+        //                lucas,
+        //            ],
+        //            event: event
+        //        )
+
+        return await MeetupGroup.create(
             name: "Dîner Paris",
-            //            invitationCode: "DINER2026",
             participants: [
                 alice,
                 thomas,
                 julie,
                 lucas,
             ],
-            event: event
+            event: event,
         )
     }
 }
