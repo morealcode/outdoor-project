@@ -43,7 +43,8 @@ struct ContentView: View {
         .onAppear {
             #if DEBUG
                 if !didResetOnboarding {
-                    hasSeenOnboarding = false
+                    hasSeenOnboarding = true
+                    // TODO: - mettre false pour demo
                     didResetOnboarding = true
                 }
             #endif
@@ -54,4 +55,25 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environment(MockData.makeStore())
+    // ContentViewPreview() // pour alexis
 }
+
+private struct ContentViewPreview: View {
+
+    @State private var store: AppStore?
+
+    var body: some View {
+        Group {
+            if let store {
+                ContentView()
+                    .environment(store)
+            } else {
+                ProgressView("Chargement...")
+            }
+        }
+        .task {
+            store = await MockDataV2.makeStore()
+        }
+    }
+}
+
