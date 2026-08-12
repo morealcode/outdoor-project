@@ -11,7 +11,7 @@ struct MeetupGroup: Identifiable {
     let id: UUID = UUID()
 
     var name: String
-    var invitationCode: String
+//    var invitationCode: String
 
     var participants: [Participant]
 

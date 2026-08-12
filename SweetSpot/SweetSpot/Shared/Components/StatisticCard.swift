@@ -29,7 +29,7 @@ struct StatisticCard: View {
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 110)
+        .frame(height: 90)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(color: .black.opacity(0.1), radius: 8)

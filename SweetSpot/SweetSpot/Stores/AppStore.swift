@@ -47,4 +47,10 @@ extension AppStore {
         
         groups[index].event = event
     }
+    
+    func deleteGroup(_ groupID: UUID) {
+        groups.removeAll {
+            $0.id == groupID
+        }
+    }
 }
