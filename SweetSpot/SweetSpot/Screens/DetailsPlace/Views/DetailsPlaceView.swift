@@ -7,25 +7,30 @@
 
 import SwiftUI
 
-struct SuggestView: View {
+struct DetailsPlaceView: View {
     
     let styleLieux : StyleLieux
     
     var body: some View {
         
-        VStack {
+        ScrollView{
             
             CarousselView()
+            
+            PlaceView()
             
             ComparatifTpsTrajetView()
             
             LocationInterestView(styleLieux: styleLieux)
             
         }
+        .background(.backgroundApp)
+        .padding()
         
     }
 }
 
 #Preview {
-    SuggestView(styleLieux: StyleLieux.exemple[0])
+    DetailsPlaceView(styleLieux: StyleLieux.exemple[0])
 }
+

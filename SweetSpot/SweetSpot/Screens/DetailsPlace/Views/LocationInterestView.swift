@@ -25,22 +25,22 @@ struct LocationInterestView: View {
                             .foregroundColor(.black)
                         
                         HStack {
-                            ForEach(StyleLieux.exemple) { exemples in
+                            ForEach(StyleLieux.exemple) { exemple in
                                 
                                 HStack(spacing: 0) {
                                     
-                                    Image(systemName: styleLieux.iconName)
+                                    Image(systemName: exemple.iconName)
                                         .font(.title3)
                                         .foregroundColor(.black)
                                     
                                     VStack(spacing: 4) {
                                         
-                                        Text(styleLieux.nom)
+                                        Text(exemple.nom)
                                             .font(.system(size: 8))
                                             .fontWeight(.bold)
                                             .foregroundColor(.black)
                                         
-                                        Text(styleLieux.description)
+                                        Text(exemple.description)
                                             .font(.system(size: 7))
                                             .foregroundColor(.gray)
                                             .multilineTextAlignment(.center)
@@ -72,3 +72,4 @@ struct LocationInterestView: View {
 #Preview {
     LocationInterestView(styleLieux: StyleLieux.exemple[0])
 }
+
