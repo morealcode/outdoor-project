@@ -51,6 +51,102 @@ enum MockData {
             response: .pending,
             hasVoted: false
         )
+        
+        let chloe = Participant(
+            name: "Chloé",
+            location: GeoPoint(
+                latitude: 48.8584,
+                longitude: 2.3470
+            ),
+            transportMode: .walking,
+            travelTime: 12 * 60,
+            response: .attending,
+            hasVoted: false
+        )
+
+        let maxime = Participant(
+            name: "Maxime",
+            location: GeoPoint(
+                latitude: 48.8695,
+                longitude: 2.3525
+            ),
+            transportMode: .bicycle,
+            travelTime: 10 * 60,
+            response: .unavailable,
+            hasVoted: false
+        )
+
+        let clara = Participant(
+            name: "Clara",
+            location: GeoPoint(
+                latitude: 48.8518,
+                longitude: 2.3585
+            ),
+            transportMode: .bus,
+            travelTime: 20 * 60,
+            response: .maybe,
+            hasVoted: false
+        )
+
+        let hugo = Participant(
+            name: "Hugo",
+            location: GeoPoint(
+                latitude: 48.8780,
+                longitude: 2.3650
+            ),
+            transportMode: .car,
+            travelTime: 14 * 60,
+            response: .pending,
+            hasVoted: false
+        )
+
+        let lea = Participant(
+            name: "Léa",
+            location: GeoPoint(
+                latitude: 48.8645,
+                longitude: 2.3445
+            ),
+            transportMode: .subway,
+            travelTime: 16 * 60,
+            response: .attending,
+            hasVoted: false
+        )
+
+        let nathan = Participant(
+            name: "Nathan",
+            location: GeoPoint(
+                latitude: 48.8465,
+                longitude: 2.3505
+            ),
+            transportMode: .bicycle,
+            travelTime: 13 * 60,
+            response: .unavailable,
+            hasVoted: false
+        )
+
+        let emma = Participant(
+            name: "Emma",
+            location: GeoPoint(
+                latitude: 48.8705,
+                longitude: 2.3380
+            ),
+            transportMode: .walking,
+            travelTime: 9 * 60,
+            response: .attending,
+            hasVoted: false
+        )
+
+        let theo = Participant(
+            name: "Théo",
+            location: GeoPoint(
+                latitude: 48.8600,
+                longitude: 2.3690
+            ),
+            transportMode: .bus,
+            travelTime: 17 * 60,
+            response: .maybe,
+            hasVoted: false
+        )
 
         let sushiPlace = Place(
             name: "Sushi One",
@@ -103,11 +199,19 @@ enum MockData {
         )
 
         return MeetupGroup(
-            name: "Projet iOS",
-            invitationCode: "IOS2026",
+            name: "Diner potin",
+//            invitationCode: "DIN2026",
             participants: [
                 ambre,
                 lucas,
+                chloe,
+                maxime,
+                clara,
+                hugo,
+                lea,
+                nathan,
+                emma,
+                theo,
             ],
             event: event
         )
@@ -145,7 +249,7 @@ enum MockData {
 
         return MeetupGroup(
             name: "Amis",
-            invitationCode: "AMIS2026",
+//            invitationCode: "AMIS2026",
             participants: [
                 ambre,
                 guillaume,
@@ -228,7 +332,7 @@ enum MockData {
 
         return MeetupGroup(
             name: "Dîner Paris",
-            invitationCode: "DINER2026",
+//            invitationCode: "DINER2026",
             participants: [
                 alice,
                 thomas,

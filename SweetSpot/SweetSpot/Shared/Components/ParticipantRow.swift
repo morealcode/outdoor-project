@@ -59,8 +59,8 @@ struct ParticipantRow: View {
                     .foregroundStyle(.accentGreen)
                 }
             }
-            Image(systemName: "chevron.right")
-                .foregroundStyle(.secondary)
+//            Image(systemName: "chevron.right")
+//                .foregroundStyle(.secondary)
         }
         .padding(.vertical, 8)
     }

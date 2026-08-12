@@ -9,7 +9,8 @@ import SwiftUI
 
 struct EventDateAndTimeCard: View {
     
-    @State private var viewModel = NewEventViewModel()
+    @Binding var selectedDate: Date
+    
     @State private var showDatePicker = false
     @State private var showTimePicker = false
     
@@ -29,7 +30,7 @@ struct EventDateAndTimeCard: View {
                             .font(.headline)
                     }
                     
-                    Text(viewModel.selectedDate.formatted(date: .numeric, time: .omitted))
+                    Text(selectedDate.formatted(date: .numeric, time: .omitted))
                         .foregroundStyle(.secondary)
                         .padding(.leading, 32)
                 }
@@ -54,7 +55,7 @@ struct EventDateAndTimeCard: View {
                             .font(.headline)
                     }
                     
-                    Text(viewModel.selectedDate.formatted(date: .omitted, time: .shortened))
+                    Text(selectedDate.formatted(date: .omitted, time: .shortened))
                         .foregroundStyle(.secondary)
                         .padding(.leading, 32)
                 }
@@ -69,7 +70,7 @@ struct EventDateAndTimeCard: View {
         .sheet(isPresented: $showDatePicker) {
             NavigationStack {
                 VStack {
-                    DatePicker("Date", selection: $viewModel.selectedDate, displayedComponents: .date)
+                    DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
                         .datePickerStyle(.graphical)
                 }
                 .padding()
@@ -87,7 +88,7 @@ struct EventDateAndTimeCard: View {
         .sheet(isPresented: $showTimePicker) {
             NavigationStack {
                 VStack {
-                    DatePicker("Heure", selection: $viewModel.selectedDate, displayedComponents: .hourAndMinute)
+                    DatePicker("Heure", selection: $selectedDate, displayedComponents: .hourAndMinute)
                         .datePickerStyle(.wheel)
                 }
                 .padding()
@@ -107,5 +108,5 @@ struct EventDateAndTimeCard: View {
 
 #Preview {
     
-    EventDateAndTimeCard()
+    EventDateAndTimeCard(selectedDate: .constant(.now))
 }

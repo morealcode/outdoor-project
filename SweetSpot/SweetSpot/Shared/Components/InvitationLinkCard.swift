@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InvitationLinkCard: View {
     
-    @State private var viewModel = NewEventViewModel()
+    let invitationLink: String
     
     var body: some View {
         
@@ -24,7 +24,7 @@ struct InvitationLinkCard: View {
             }
             
             HStack {
-                Text(viewModel.invitationLink)
+                Text(invitationLink)
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
@@ -32,12 +32,14 @@ struct InvitationLinkCard: View {
                 
                 Spacer()
                 
-                ShareLink(
-                    item: URL(string: viewModel.invitationLink)!,
-                    subject: Text("Invitation Sweetspot"),
-                    message: Text("Rejoins mon évènement sur sweespot !")
-                ) {
-                    Image(systemName: "square.and.arrow.up")
+                if let url = URL(string: invitationLink) {
+                    ShareLink(
+                        item: url,
+                        subject: Text("Invitation Sweetspot"),
+                        message: Text("Rejoins mon évènement sur sweespot !")
+                    ) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
                 }
             }
         }
@@ -49,5 +51,5 @@ struct InvitationLinkCard: View {
 }
 
 #Preview {
-    InvitationLinkCard()
+    InvitationLinkCard(invitationLink: "https://sweetspot.app/join/ABC12345")
 }
