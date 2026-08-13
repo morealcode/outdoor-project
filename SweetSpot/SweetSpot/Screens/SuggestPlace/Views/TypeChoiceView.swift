@@ -22,13 +22,12 @@ struct TypeChoiceView: View {
         
         ScrollView(.horizontal, showsIndicators: false) {
                    HStack(spacing: 12) {
-                       ForEach(LocationType.arrOfLocationType) { type in
+                       ForEach(CuisineType.allCases) { type in
                            HStack(spacing: 8) {
-                               Image(systemName: type.symbol)
+                               Text(type.emoji)
                                    .font(.system(size: 16, weight: .medium))
-                                   .foregroundStyle(type.color)
                                
-                               Text(type.name)
+                               Text(type.rawValue)
                                    .font(.system(size: 16, weight: .semibold))
                                    .foregroundStyle(Color(red: 0.2, green: 0.25, blue: 0.35))
                            }
