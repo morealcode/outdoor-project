@@ -68,13 +68,12 @@ struct GroupView: View {
         .navigationDestination(isPresented: $showEventDetails) {
             SummaryView()
         }
-        .navigationDestination(isPresented: $showEditEvent) {
-            if let event = viewModel.event,
-                let groupID = viewModel.group?.id
-            {
+        .navigationDestination(
+            isPresented: $showEditEvent
+        ) {
+            if let groupID = viewModel.group?.id {
                 NewEventView(
-                    groupID: groupID,
-                    event: event
+                    groupID: groupID
                 )
             }
         }

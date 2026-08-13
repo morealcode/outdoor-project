@@ -50,7 +50,7 @@ struct HomeView: View {
         .navigationDestination(
             isPresented: $showNewEvent
         ) {
-            NewEventView(groupID: UUID())
+            NewEventView()
         }
     }
 }
