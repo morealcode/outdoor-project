@@ -43,7 +43,7 @@ extension Participant {
         transportMode: .walking,
         travelTime: 12 * 60,
         response: .attending,
-        hasVoted: false
+        hasVoted: true
     )
 
     static let mockBicycle = Participant(
