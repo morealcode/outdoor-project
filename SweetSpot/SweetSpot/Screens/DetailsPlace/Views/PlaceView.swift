@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PlaceView: View {
     
-    let lieu: LieuDetail = .exemple
+    let lieu: Place
     @State private var isFavorite: Bool = false
     
     private let primaryPurple = Color(red: 0.55, green: 0.38, blue: 0.98)
@@ -22,7 +22,7 @@ struct PlaceView: View {
             VStack(alignment: .leading, spacing: 8) {
                 
                 HStack {
-                    Text(lieu.nom)
+                    Text(lieu.name)
                         .font(.title)
                         .bold()
                         .foregroundColor(.black)
@@ -38,7 +38,7 @@ struct PlaceView: View {
                     }
                 }
                 
-                Text(lieu.categorie)
+                Text(lieu.category.rawValue)
                     .font(.caption)
                     .bold()
                     .foregroundColor(primaryPurple)
@@ -55,11 +55,11 @@ struct PlaceView: View {
                             .foregroundColor(primaryPurple)
                             .font(.caption)
                         
-                        Text(String(format: "%.1f", lieu.note))
+                        Text(String(format: "%.1f", lieu.rating))
                             .font(.caption)
                             .bold()
                         
-                        Text("(\(lieu.nombreAvis) avis)")
+                        Text("(\(lieu.reviewCount) avis)")
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
@@ -73,7 +73,7 @@ struct PlaceView: View {
                             .foregroundColor(tealThumb)
                             .font(.caption)
                         
-                        Text("\(lieu.pourcentageRecommandation)% recommandent")
+                        Text("\(lieu.matchPercentage)% recommandent")
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
@@ -95,7 +95,7 @@ struct PlaceView: View {
                 DetailRowView(
                     icon: "eurosign",
                     title: "Budget moyen",
-                    detail: lieu.budget,
+                    detail: lieu.priceRange,
                     primaryPurple: primaryPurple,
                     trailingText: lieu.niveauBudget
                 )
@@ -105,7 +105,7 @@ struct PlaceView: View {
                 DetailRowView(
                     icon: "mappin",
                     title: "Adresse",
-                    detail: lieu.adresse,
+                    detail: lieu.address,
                     primaryPurple: primaryPurple,
                     trailingIcon: "paperplane"
                 )
@@ -115,7 +115,7 @@ struct PlaceView: View {
                 DetailRowView(
                     icon: "info",
                     title: "Infos clés",
-                    detail: lieu.infosCles,
+                    detail: lieu.infoCles,
                     primaryPurple: primaryPurple
                 )
             }
@@ -133,5 +133,5 @@ struct PlaceView: View {
 }
 
 #Preview {
-    PlaceView()
+    PlaceView(lieu: Place.mock)
 }

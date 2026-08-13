@@ -27,6 +27,13 @@ struct Place: Identifiable {
     var tagColor: Color
     var isSelected: Bool = false
 
+    // Infos utilisé dans PlaceView
+    var horaire: String
+    var niveauBudget: String
+    var infoCles: String
+
+    // MARK: - Init principal
+
     init(
         name: String,
         address: String,
@@ -120,42 +127,73 @@ struct Place: Identifiable {
                 .teal,
                 .blue,
             ].randomElement() ?? .teal
-    }
-    
-    // Init pour le mock
-    init(
-            name: String,
-            address: String,
-            location: GeoPoint,
-            category: PlaceCategory,
-            imageName: String,
-            matchPercentage: Int,
-            matchColor: Color,
-            rating: Double,
-            reviewCount: Int,
-            duration: String,
-            priceRange: String,
-            tag: String,
-            tagColor: Color,
-            isSelected: Bool = false
-        ) {
-            self.name = name
-            self.address = address
-            self.location = location
-            self.category = category
-            self.imageName = imageName
-            self.matchPercentage = matchPercentage
-            self.matchColor = matchColor
-            self.rating = rating
-            self.reviewCount = reviewCount
-            self.duration = duration
-            self.priceRange = priceRange
-            self.tag = tag
-            self.tagColor = tagColor
-            self.isSelected = isSelected
-        }
 
+        // Horaire
+        self.horaire =
+            "Aujourd’hui · 18h00 - 22h00"
+
+        // Budget
+        self.niveauBudget =
+            [
+                "€",
+                "€€",
+                "€€€",
+            ].randomElement() ?? "€€"
+
+        // Infos clés
+        self.infoCles =
+            [
+                "Rooftop · Vue panoramique\nTerrasse · Réservation conseillée",
+                "Terrasse chauffée\nCuisine maison · Réservation conseillée",
+                "Ambiance calme\nIdéal pour les groupes · Wi-Fi disponible",
+                "Cocktails signature\nMusique live · Terrasse extérieure",
+                "Options végétariennes\nProduits locaux · Accessible PMR",
+            ].randomElement()
+            ?? "Terrasse · Réservation conseillée"
+    }
+
+    // MARK: - Init pour les mocks
+
+    init(
+        name: String,
+        address: String,
+        location: GeoPoint,
+        category: PlaceCategory,
+        imageName: String,
+        matchPercentage: Int,
+        matchColor: Color,
+        rating: Double,
+        reviewCount: Int,
+        duration: String,
+        priceRange: String,
+        tag: String,
+        tagColor: Color,
+        horaire: String,
+        niveauBudget: String,
+        infoCles: String,
+        isSelected: Bool = false
+    ) {
+        self.name = name
+        self.address = address
+        self.location = location
+        self.category = category
+        self.imageName = imageName
+        self.matchPercentage = matchPercentage
+        self.matchColor = matchColor
+        self.rating = rating
+        self.reviewCount = reviewCount
+        self.duration = duration
+        self.priceRange = priceRange
+        self.tag = tag
+        self.tagColor = tagColor
+        self.horaire = horaire
+        self.niveauBudget = niveauBudget
+        self.infoCles = infoCles
+        self.isSelected = isSelected
+    }
 }
+
+// MARK: - Mocks
 
 extension Place {
 
@@ -175,7 +213,10 @@ extension Place {
         duration: "9 min",
         priceRange: "25–45 € /pers.",
         tag: "Terrasse",
-        tagColor: .teal
+        tagColor: .teal,
+        horaire: "Aujourd’hui · 18h00 - 22h00",
+        niveauBudget: "€€",
+        infoCles: "Rooftop · Vue panoramique\nTerrasse · Réservation conseillée"
     )
 
     static let mockBar = Place(
@@ -194,6 +235,9 @@ extension Place {
         duration: "14 min",
         priceRange: "18–35 € /pers.",
         tag: "Cocktails",
-        tagColor: .purple
+        tagColor: .purple,
+        horaire: "Aujourd’hui · 18h00 - 22h00",
+        niveauBudget: "€",
+        infoCles: "Cocktails signature\nMusique live · Terrasse extérieure"
     )
 }

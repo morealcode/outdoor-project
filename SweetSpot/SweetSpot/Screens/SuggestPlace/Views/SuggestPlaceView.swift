@@ -32,6 +32,8 @@ struct SuggestPlaceView: View {
 
                         NavigationLink(
                             destination: DetailsPlaceView(
+                                lieu: lieu,
+                                participants: group.participants,
                                 styleLieux: StyleLieux.exemple[0]
                             )
                         ) {
