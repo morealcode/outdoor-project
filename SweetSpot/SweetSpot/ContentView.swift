@@ -25,7 +25,6 @@ struct ContentView: View {
                         NavigationStack {
                             HomeView()
                         }
-                        // NewEventView(groupID: UUID())
                     }
 
                     Tab("Groupes", systemImage: "person.3.fill") {

@@ -10,87 +10,131 @@ import SwiftUI
 
 struct MeetingZoneView: View {
 
-    private let optimalPoint = CLLocationCoordinate2D(
-        latitude: 48.8656,
-        longitude: 2.3410
-    )
+    let group: MeetupGroup
 
     @State private var cameraPosition: MapCameraPosition
 
-    private let participants: [Participant] = [
-        Participant(
-            name: "Alice",
-            location: GeoPoint(
-                latitude: 48.8750,
-                longitude: 2.3350
+    // MARK: - Participants
+
+    private var participants: [Participant] {
+        group.participants
+    }
+
+    // MARK: - Optimal Point
+
+    private var optimalPoint: CLLocationCoordinate2D {
+
+        if let center = group.event.meetingZone?.center {
+            return center.coordinate
+        }
+
+        return
+            MeetupGroup
+            .calculateCenter(
+                of: participants
+            )
+            .coordinate
+    }
+
+    // MARK: - Init
+
+    init(group: MeetupGroup) {
+
+        self.group = group
+
+        let participants = group.participants
+
+        let optimalPoint: CLLocationCoordinate2D
+
+        if let center = group.event.meetingZone?.center {
+
+            optimalPoint = center.coordinate
+
+        } else {
+
+            optimalPoint =
+                MeetupGroup
+                .calculateCenter(
+                    of: participants
+                )
+                .coordinate
+        }
+
+        // Toutes les coordonnées disponibles
+        let participantCoordinates =
+            participants.compactMap {
+                $0.location?.coordinate
+            }
+
+        let allCoordinates =
+            participantCoordinates
+            + [optimalPoint]
+
+        // Centre réel de toutes les coordonnées
+        let mapCenter: CLLocationCoordinate2D
+
+        if allCoordinates.isEmpty {
+
+            mapCenter = optimalPoint
+
+        } else {
+
+            let latitude =
+                allCoordinates
+                .map(\.latitude)
+                .reduce(0, +)
+                / Double(allCoordinates.count)
+
+            let longitude =
+                allCoordinates
+                .map(\.longitude)
+                .reduce(0, +)
+                / Double(allCoordinates.count)
+
+            mapCenter = CLLocationCoordinate2D(
+                latitude: latitude,
+                longitude: longitude
+            )
+        }
+
+        // MARK: - Span dynamique
+
+        let latitudes =
+            allCoordinates.map(\.latitude)
+
+        let longitudes =
+            allCoordinates.map(\.longitude)
+
+        let latitudeDelta =
+            (latitudes.max() ?? mapCenter.latitude)
+            - (latitudes.min() ?? mapCenter.latitude)
+
+        let longitudeDelta =
+            (longitudes.max() ?? mapCenter.longitude)
+            - (longitudes.min() ?? mapCenter.longitude)
+
+        // Petite marge pour ne pas coller les pins aux bords
+        let span = MKCoordinateSpan(
+            latitudeDelta: max(
+                latitudeDelta * 1.8,
+                0.015
             ),
-            transportMode: .walking,
-            travelTime: 18 * 60,
-            response: .attending,
-            hasVoted: true
-        ),
-
-        Participant(
-            name: "Thomas",
-            location: GeoPoint(
-                latitude: 48.8740,
-                longitude: 2.3560
-            ),
-            transportMode: .transport,
-            travelTime: 22 * 60,
-            response: .attending,
-            hasVoted: true
-        ),
-
-        Participant(
-            name: "Julie",
-            location: GeoPoint(
-                latitude: 48.8660,
-                longitude: 2.3250
-            ),
-            transportMode: .car,
-            travelTime: 15 * 60,
-            response: .maybe,
-            hasVoted: false
-        ),
-
-        Participant(
-            name: "Lucas",
-            location: GeoPoint(
-                latitude: 48.8580,
-                longitude: 2.3520
-            ),
-            transportMode: .bicycle,
-            travelTime: 20 * 60,
-            response: .pending,
-            hasVoted: true
-        ),
-    ]
-
-    init() {
-        let optimalPoint = CLLocationCoordinate2D(
-            latitude: 48.8656,
-            longitude: 2.3410
-        )
-
-        let mapCenter = CLLocationCoordinate2D(
-            latitude: optimalPoint.latitude - 0.008,
-            longitude: optimalPoint.longitude
+            longitudeDelta: max(
+                longitudeDelta * 1.8,
+                0.015
+            )
         )
 
         _cameraPosition = State(
             initialValue: .region(
                 MKCoordinateRegion(
                     center: mapCenter,
-                    span: MKCoordinateSpan(
-                        latitudeDelta: 0.035,
-                        longitudeDelta: 0.035
-                    )
+                    span: span
                 )
             )
         )
     }
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
 
@@ -105,9 +149,11 @@ struct MeetingZoneView: View {
                 )
             }
 
-            MapCardView()
-                .padding(.horizontal, 16)
-                .padding(.bottom, 20)
+            MapCardView(
+                participants: participants
+            )
+            .padding(.horizontal, 16)
+            .padding(.bottom, 20)
         }
         .ignoresSafeArea(edges: .bottom)
     }
@@ -120,39 +166,11 @@ struct MeetingZoneHeaderView: View {
     var body: some View {
         HStack(spacing: 16) {
 
-            // Peut-être pas nécessaire puisqu'il y a un bouton dans navigationstack par défaut
-            // MeetingZoneBackButton()
-
             MeetingZoneHeaderTitle()
 
             Spacer()
-
         }
         .padding()
-    }
-}
-
-// MARK: - Back Button
-
-struct MeetingZoneBackButton: View {
-
-    var body: some View {
-        Button {
-            print("Retour")
-        } label: {
-            Image(systemName: "chevron.left")
-                .font(.title3.bold())
-                .foregroundStyle(.primary)
-                .frame(width: 50, height: 50)
-                .background(.white)
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 16)
-                )
-                .shadow(
-                    color: .black.opacity(0.08),
-                    radius: 8
-                )
-        }
     }
 }
 
@@ -178,30 +196,39 @@ struct MeetingZoneHeaderTitle: View {
     }
 }
 
-// MARK: - Filter Button
+// MARK: - Preview
 
-struct MeetingZoneFilterButton: View {
-
-    var body: some View {
-        Button {
-            print("Filtres")
-        } label: {
-            Label(
-                "Filtres",
-                systemImage: "slider.horizontal.3"
-            )
-            .font(.headline)
-            .foregroundStyle(.indigo)
-            .padding()
-            .background(.white)
-            .clipShape(
-                RoundedRectangle(cornerRadius: 16)
-            )
-        }
-    }
+#Preview("MeetingZoneView") {
+    MeetingZoneViewPreview()
 }
 
-// MARK: - Preview
-#Preview {
-    MeetingZoneView()
+private struct MeetingZoneViewPreview: View {
+
+    @State private var store: AppStore?
+
+    var body: some View {
+        Group {
+
+            if let store,
+                let group = store.groups.first
+            {
+
+                NavigationStack {
+                    MeetingZoneView(
+                        group: group
+                    )
+                }
+                .environment(store)
+
+            } else {
+
+                ProgressView(
+                    "Chargement..."
+                )
+            }
+        }
+        .task {
+            store = await MockDataV2.makeStore()
+        }
+    }
 }
