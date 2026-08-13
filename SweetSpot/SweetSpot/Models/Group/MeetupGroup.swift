@@ -237,11 +237,7 @@ extension MeetupGroup {
                     location: GeoPoint(
                         latitude: coordinate.latitude,
                         longitude: coordinate.longitude
-                    ),
-
-                    category: .french,
-                    rating: nil,
-                    priceLevel: nil
+                    )
                 )
 
                 print("\n📍 Évaluation de \(place.name)")

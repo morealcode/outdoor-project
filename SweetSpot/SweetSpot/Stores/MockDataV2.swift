@@ -122,9 +122,9 @@ enum MockDataV2 {
                 latitude: 48.8615,
                 longitude: 2.3540
             ),
-            category: .sushi,
-            rating: 4.6,
-            priceLevel: 2,
+//            category: .sushi,
+//            rating: 4.6,
+//            priceLevel: 2,
         )
 
         let barPlace = Place(
@@ -134,9 +134,9 @@ enum MockDataV2 {
                 latitude: 48.8630,
                 longitude: 2.3600
             ),
-            category: .bar,
-            rating: 4.3,
-            priceLevel: 2,
+//            category: .bar,
+//            rating: 4.3,
+//            priceLevel: 2,
         )
 
         let event = MeetupEvent(
