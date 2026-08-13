@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SuggestPlaceView: View {
+    @Environment(\.dismiss) private var dismiss
 
     let group: MeetupGroup
 
@@ -19,52 +20,51 @@ struct SuggestPlaceView: View {
 
     var body: some View {
 
-        NavigationStack {
-            VStack(spacing: 16) {
+        VStack(spacing: 16) {
 
-                TypeChoiceView()
-                    .padding(.horizontal, 8)
+            TypeChoiceView()
+                .padding(.horizontal, 8)
 
-                ScrollView {
-                    VStack(spacing: 12) {
+            ScrollView {
+                VStack(spacing: 12) {
 
-                        ForEach(lieux) { lieu in
+                    ForEach(lieux) { lieu in
 
-                            NavigationLink(
-                                destination: DetailsPlaceView(
-                                    styleLieux: StyleLieux.exemple[0]
-                                )
-                            ) {
-                                LieuxCardView(
-                                    lieu: lieu,
-                                    isSelected: selectedPlaceID == lieu.id,
-                                    onSelect: {
-                                        toggleSelection(for: lieu)
-                                    }
-                                )
-                                .padding(.horizontal, 8)
-                            }
-                            .buttonStyle(.plain)
+                        NavigationLink(
+                            destination: DetailsPlaceView(
+                                styleLieux: StyleLieux.exemple[0]
+                            )
+                        ) {
+                            LieuxCardView(
+                                lieu: lieu,
+                                isSelected: selectedPlaceID == lieu.id,
+                                onSelect: {
+                                    toggleSelection(for: lieu)
+                                }
+                            )
+                            .padding(.horizontal, 8)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
-
-                PrimaryButton(
-                    title: "Vote pour le lieu de ton choix",
-                    systemImage: "checkmark.circle.fill",
-                    action: voteForSelectedPlace
-                )
-                .disabled(selectedPlaceID == nil)
-                .opacity(
-                    selectedPlaceID == nil
-                        ? 0.5
-                        : 1
-                )
-                .padding(.horizontal, 16)
             }
-            .padding(.vertical, 8)
-            .background(.backgroundApp)
+
+            PrimaryButton(
+                title: "Vote pour le lieu de ton choix",
+                systemImage: "checkmark.circle.fill",
+                action: voteForSelectedPlace
+            )
+            .disabled(selectedPlaceID == nil)
+            .opacity(
+                selectedPlaceID == nil
+                    ? 0.5
+                    : 1
+            )
+            .padding(.horizontal, 16)
         }
+        .padding(.vertical, 8)
+        .background(.backgroundApp)
+
     }
 
     // MARK: - Selection
@@ -95,6 +95,8 @@ struct SuggestPlaceView: View {
         print(
             "🗳️ Lieu sélectionné pour \(group.name) : \(chosenPlace.name)"
         )
+
+        dismiss()
     }
 }
 
@@ -102,6 +104,7 @@ struct SuggestPlaceView: View {
 
 #Preview {
     SuggestPlacePreview()
+
 }
 
 private struct SuggestPlacePreview: View {
@@ -121,9 +124,11 @@ private struct SuggestPlacePreview: View {
 
             } else if let group {
 
-                SuggestPlaceView(
-                    group: group
-                )
+                NavigationStack {
+                    SuggestPlaceView(
+                        group: group
+                    )
+                }
 
             } else {
 
