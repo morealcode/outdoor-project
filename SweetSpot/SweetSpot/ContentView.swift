@@ -46,8 +46,7 @@ struct ContentView: View {
         .onAppear {
             #if DEBUG
                 if !didResetOnboarding {
-                    hasSeenOnboarding = true
-                    // TODO: - mettre false pour demo
+                    hasSeenOnboarding = false // TODO: - mettre false pour demo
                     didResetOnboarding = true
                 }
             #endif
