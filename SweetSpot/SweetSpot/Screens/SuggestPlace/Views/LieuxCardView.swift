@@ -10,6 +10,8 @@ import SwiftUI
 struct LieuxCardView: View {
     
     let lieu: Lieu
+    let isSelected: Bool
+    let onSelect: () -> Void
     
     var body: some View {
         
@@ -40,11 +42,14 @@ struct LieuxCardView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: "checkmark")
-                                    .font(.caption2.bold())
-                                    .foregroundStyle(lieu.isSelected ? .black : .gray.opacity(0.6))
-                                    .padding(8)
-                                    .background(.white, in: Circle())
+                                Button(action: onSelect) {
+                                    Image(systemName: "checkmark")
+                                        .font(.caption2.bold())
+                                        .foregroundStyle(isSelected ? .white : .gray.opacity(0.6))
+                                        .padding(8)
+                                        .background(isSelected ? Color.green : Color.white, in: Circle())
+                                }
+                                .buttonStyle(.borderless)
                             }
                             
                             Spacer()
@@ -109,6 +114,10 @@ struct LieuxCardView: View {
                     .background(.white)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 20))
+                .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(isSelected ? Color.green : Color.clear, lineWidth: 2)
+                        )
                 .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 4)
     }
         
@@ -116,7 +125,9 @@ struct LieuxCardView: View {
 
 
 #Preview {
-    LieuxCardView(lieu: Lieu.samples[0])
+    LieuxCardView(lieu: Lieu.samples[0],
+    isSelected: true,
+    onSelect: {})
         .padding()
 }
 
