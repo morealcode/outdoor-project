@@ -9,14 +9,14 @@ import Foundation
 import SwiftUI
 
 enum ParticipantResponse: String, CaseIterable, Identifiable {
-    
+
     case attending
     case pending
     case maybe
     case unavailable
-    
+
     var id: Self { self }
-    
+
     var title: String {
         switch self {
         case .attending:
@@ -29,7 +29,7 @@ enum ParticipantResponse: String, CaseIterable, Identifiable {
             return "Indisponible"
         }
     }
-    
+
     var colorName: Color {
         switch self {
         case .attending:
@@ -42,7 +42,7 @@ enum ParticipantResponse: String, CaseIterable, Identifiable {
             return Color(.red)
         }
     }
-    
+
     var systemImage: String {
         switch self {
         case .attending:
@@ -53,6 +53,19 @@ enum ParticipantResponse: String, CaseIterable, Identifiable {
             return "eye.fill"
         case .unavailable:
             return "minus.circle.fill"
+        }
+    }
+}
+
+extension ParticipantResponse {
+
+    var shouldAffectMeetingLocation: Bool {
+        switch self {
+        case .attending, .maybe:
+            return true
+
+        case .pending, .unavailable:
+            return false
         }
     }
 }

@@ -198,24 +198,6 @@ enum MockDataV2 {
             finalPlaceID: nil,
         )
 
-        //        return MeetupGroup(
-        //            name: "Diner potin",
-        ////            invitationCode: "DIN2026",
-        //            participants: [
-        //                ambre,
-        //                lucas,
-        //                chloe,
-        //                maxime,
-        //                clara,
-        //                hugo,
-        //                lea,
-        //                nathan,
-        //                emma,
-        //                theo,
-        //            ],
-        //            event: event
-        //        )
-
         let group = await MeetupGroup.create(
             name: "Diner potin",
             participants: [

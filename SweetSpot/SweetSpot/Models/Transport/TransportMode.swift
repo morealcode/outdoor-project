@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 enum TransportMode: String, CaseIterable, Identifiable {
     case car = "Car"
@@ -25,6 +26,25 @@ enum TransportMode: String, CaseIterable, Identifiable {
             return "bus.fill"
         case .walking:
             return "figure.walk"
+        }
+    }
+}
+
+extension TransportMode {
+
+    var mapKitTransportType: MKDirectionsTransportType {
+        switch self {
+        case .bicycle:
+            return .cycling
+        
+        case .car:
+            return .automobile
+
+        case .walking:
+            return .walking
+
+        case .transport:
+            return .transit
         }
     }
 }
