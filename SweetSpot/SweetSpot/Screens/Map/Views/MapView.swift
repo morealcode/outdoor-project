@@ -153,7 +153,7 @@ struct MeetingZoneView: View {
                 participants: participants
             )
             .padding(.horizontal, 16)
-            .padding(.bottom, 20)
+            .padding(.bottom, 100)
         }
         .ignoresSafeArea(edges: .bottom)
     }

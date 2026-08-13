@@ -19,9 +19,9 @@ struct SummaryView: View {
 
                 DestinationRow()
 
-                VoteRow()
+                VoteRow(participants: group.participants)
 
-                AttendeesRow()
+                AttendeesRow(participants: group.participants)
 
                 PrimaryButton(
                     title: "Voir la zone de rendez-vous",

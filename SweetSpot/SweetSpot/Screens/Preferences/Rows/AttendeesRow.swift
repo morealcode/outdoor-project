@@ -8,6 +8,20 @@
 import SwiftUI
 
 struct AttendeesRow: View {
+
+    let participants: [Participant]
+
+    private let colors: [Color] = [
+        .blue,
+        .green,
+        .orange,
+        .pink,
+        .purple,
+        .red,
+        .teal,
+        .indigo,
+    ]
+
     var body: some View {
         VStack {
             HStack {
@@ -15,36 +29,23 @@ struct AttendeesRow: View {
                     .fontWeight(.semibold)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
-            VStack {
-                HStack(spacing: 0){
+
+            HStack(spacing: -5) {
+                ForEach(Array(participants.enumerated()), id: \.element.id) {
+                    index,
+                    participant in
                     Circle()
-                        .fill(.green)
+                        .fill(colors[index % colors.count])
                         .frame(width: 40, height: 40)
-                        .overlay(alignment: .center){
-                            Text("A")
+                        .background(
+                            .white,
+                            in: .circle.stroke(lineWidth: 5)
+                        )
+                        .overlay {
+                            Text(initial(for: participant))
                                 .foregroundStyle(.white)
+                                .fontWeight(.semibold)
                         }
-                    Circle()
-                        .fill(.purple)
-                        .frame(width: 40, height: 40)
-                        .background(.white, in: .circle.stroke(lineWidth: 5))
-                        .overlay(alignment: .center){
-                            Text("H")
-                                .foregroundStyle(.white)
-                        }
-                        .offset(x: -5)
-               
-                    Circle()
-                        .fill(.orange)
-                        .frame(width: 40, height: 40)
-                        .background(.white, in: .circle.stroke(lineWidth: 5))
-                        .overlay(alignment: .center) {
-                            Text("G")
-                                .foregroundStyle(.white)
-                        }
-                        .offset(x: -10)
-                       
                 }
             }
             .frame(maxWidth: .infinity)
@@ -52,14 +53,28 @@ struct AttendeesRow: View {
             .background(.white)
             .overlay {
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(lineWidth: 2)
-                    .foregroundStyle(.secondary).opacity(0.4)
+                    .stroke(
+                        .secondary.opacity(0.4),
+                        lineWidth: 2
+                    )
             }
-
         }
+    }
+
+    private func initial(for participant: Participant) -> String {
+        participant.name
+            .prefix(1)
+            .uppercased()
     }
 }
 
 #Preview {
-    AttendeesRow()
+    AttendeesRow(
+        participants: [
+            .mock,
+            .mockWalking,
+            .mockBicycle,
+            .mockCar,
+        ]
+    )
 }
