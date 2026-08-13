@@ -25,7 +25,3 @@ struct ProgressTile: View {
 #Preview {
     ProgressTile(note: 9)
 }
-
-#Preview {
-    RecapitulatifView()
-}

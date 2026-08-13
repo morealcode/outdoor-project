@@ -63,7 +63,3 @@ struct AttendeesRow: View {
 #Preview {
     AttendeesRow()
 }
-
-#Preview {
-    RecapitulatifView()
-}

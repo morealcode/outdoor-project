@@ -22,12 +22,16 @@ struct ContentView: View {
             if hasSeenOnboarding {
                 TabView {
                     Tab("Home", systemImage: "party.popper.fill") {
-                        HomeView()
+                        NavigationStack {
+                            HomeView()
+                        }
                         // NewEventView(groupID: UUID())
                     }
 
                     Tab("Groupes", systemImage: "person.3.fill") {
-                        GroupList()
+                        NavigationStack {
+                            GroupList()
+                        }
                     }
 
                     Tab("Préférences", systemImage: "gearshape.fill") {
@@ -53,9 +57,9 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
-        .environment(MockData.makeStore())
-    //     ContentViewPreview() // pour alexis
+    //    ContentView()
+    //        .environment(MockData.makeStore())
+    ContentViewPreview()  // pour la V2
 }
 
 private struct ContentViewPreview: View {

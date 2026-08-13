@@ -51,7 +51,3 @@ struct DestinationRow: View {
 #Preview {
     DestinationRow()
 }
-
-#Preview {
-    RecapitulatifView()
-}
