@@ -11,18 +11,24 @@ struct GroupList: View {
 
     @Environment(AppStore.self) private var store
 
+    private var activeGroups: [MeetupGroup] {
+        store.groups
+            .filter { $0.event.date >= Date.now }
+            .sorted { $0.event.date < $1.event.date }
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
                 Color(.systemGroupedBackground)
                     .ignoresSafeArea()
 
-                if store.groups.isEmpty {
+                if activeGroups.isEmpty {
                     emptyState
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 16) {
-                            ForEach(store.groups) { group in
+                            ForEach(activeGroups) { group in
                                 NavigationLink {
                                     GroupView(
                                         store: store,
@@ -152,9 +158,9 @@ private struct GroupInfoItem: View {
     }
 }
 
-private extension GroupList {
+extension GroupList {
 
-    var emptyState: some View {
+    fileprivate var emptyState: some View {
         VStack(spacing: 20) {
 
             ZStack {
@@ -186,7 +192,32 @@ private extension GroupList {
     }
 }
 
-#Preview {
+#Preview("MockDataV2") {
+    GroupListPreview()
+}
+
+#Preview("MockV1") {
     GroupList()
         .environment(MockData.makeStore())
+}
+
+private struct GroupListPreview: View {
+
+    @State private var store: AppStore?
+
+    var body: some View {
+        Group {
+            if let store {
+                GroupList()
+                    .environment(store)
+            } else {
+                ProgressView(
+                    "Chargement..."
+                )
+            }
+        }
+        .task {
+            store = await MockDataV2.makeStore()
+        }
+    }
 }

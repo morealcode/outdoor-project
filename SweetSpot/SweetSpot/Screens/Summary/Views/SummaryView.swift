@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecapitulatifView: View {
+struct SummaryView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20){
@@ -23,5 +23,5 @@ struct RecapitulatifView: View {
 }
 
 #Preview {
-    RecapitulatifView()
+    SummaryView()
 }
