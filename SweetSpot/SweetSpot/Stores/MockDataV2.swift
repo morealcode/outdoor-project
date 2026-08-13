@@ -19,6 +19,7 @@ enum MockDataV2 {
         return await AppStore(
             currentUser: currentUser,
             groups: [
+                makePastGroup(),
                 makeProjectGroup(),
                 makeFriendsGroup(),
                 makeDinnerGroup(),
@@ -359,6 +360,53 @@ enum MockDataV2 {
                 lucas,
             ],
             event: event,
+        )
+    }
+    
+    // Past group
+    static func makePastGroup() -> MeetupGroup {
+
+        let ambre = Participant(
+            name: "Ambre",
+            location: GeoPoint(
+                latitude: 48.8566,
+                longitude: 2.3522
+            ),
+            transportMode: .transport,
+            travelTime: 18 * 60,
+            response: .attending,
+            hasVoted: true
+        )
+
+        let lucas = Participant(
+            name: "Lucas",
+            location: GeoPoint(
+                latitude: 48.8618,
+                longitude: 2.3560
+            ),
+            transportMode: .bicycle,
+            travelTime: 15 * 60,
+            response: .attending,
+            hasVoted: true
+        )
+
+        let event = MeetupEvent(
+            name: "Brunch du mois dernier",
+            date: Date.now.addingTimeInterval(-7 * 86_400),
+            invitationLink: "",
+            meetingZone: nil,
+            suggestedPlaces: [],
+            votes: [:],
+            finalPlaceID: nil
+        )
+
+        return MeetupGroup(
+            name: "Brunch équipe",
+            participants: [
+                ambre,
+                lucas
+            ],
+            event: event
         )
     }
 }

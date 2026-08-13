@@ -10,6 +10,12 @@ import SwiftUI
 struct GroupList: View {
 
     @Environment(AppStore.self) private var store
+    
+    private var activeGroups: [MeetupGroup] {
+            store.groups
+                .filter { $0.event.date >= Date.now }
+                .sorted { $0.event.date < $1.event.date }
+        }
 
     var body: some View {
         NavigationStack {
@@ -17,7 +23,7 @@ struct GroupList: View {
                 Color(.systemGroupedBackground)
                     .ignoresSafeArea()
 
-                if store.groups.isEmpty {
+                if activeGroups.isEmpty {
                     emptyState
                 } else {
                     ScrollView {
@@ -186,7 +192,7 @@ private extension GroupList {
     }
 }
 
-#Preview {
+#Preview("MockV1") {
     GroupList()
         .environment(MockData.makeStore())
 }
