@@ -8,21 +8,23 @@
 import SwiftUI
 
 struct DetailsPlaceView: View {
-    
-    let styleLieux : StyleLieux
-    
+
+    let lieu: Place
+    let participants: [Participant]
+    let styleLieux: StyleLieux
+
     var body: some View {
-        
-        ScrollView{
-            
+
+        ScrollView {
+
             VStack(spacing: 20) {
-                
+
                 CarousselView()
-                
-                PlaceView()
-                
-                ComparatifTpsTrajetView()
-                
+
+                PlaceView(lieu: lieu)
+
+                ComparatifTpsTrajetView(participants: participants)
+
                 LocationInterestView(styleLieux: styleLieux)
             }
             .padding()
@@ -32,6 +34,9 @@ struct DetailsPlaceView: View {
 }
 
 #Preview {
-    DetailsPlaceView(styleLieux: StyleLieux.exemple[0])
+    DetailsPlaceView(
+        lieu: Place.mock,
+        participants: [.mock, .mockWalking, .mockBicycle, .mockCar],
+        styleLieux: StyleLieux.exemple[0]
+    )
 }
-

@@ -61,5 +61,3 @@ struct LieuDetail {
         infosCles: "Rooftop · Vue panoramique Terrasse\nRéservation conseillée"
     )
 }
-        
-       

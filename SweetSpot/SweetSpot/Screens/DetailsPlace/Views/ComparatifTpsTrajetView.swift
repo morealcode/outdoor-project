@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ComparatifTpsTrajetView: View {
+    let participants: [Participant]
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            
+
             // 1. Titre & sous-titre
             VStack(alignment: .leading, spacing: 2) {
                 Text("Comparatif des temps de trajet")
@@ -22,10 +24,9 @@ struct ComparatifTpsTrajetView: View {
                     .foregroundStyle(.secondary)
             }
 
-           
             HStack(spacing: 0) {
-                
-               Spacer()
+
+                Spacer()
 
                 HStack(spacing: 8) {
                     TransportHeaderIcon(icon: "car.fill", label: "Voiture")
@@ -39,9 +40,9 @@ struct ComparatifTpsTrajetView: View {
             Divider()
 
             VStack(spacing: 8) {
-                ForEach(Participants.membre) { participant in
+                ForEach(participants) { participant in
                     ParticipantRowView(participant: participant)
-                    
+
                     if participant.id != Participants.membre.last?.id {
                         Divider()
                     }
@@ -98,18 +99,18 @@ struct TransportHeaderIcon: View {
 }
 
 struct ParticipantRowView: View {
-    let participant: Participants
+    let participant: Participant
 
     var body: some View {
         HStack(spacing: 0) {
-    
+
             HStack(spacing: 6) {
                 Image(systemName: "person.crop.circle")
                     .font(.title3)
                     .foregroundColor(.gray)
 
                 VStack(alignment: .leading, spacing: 1) {
-                    Text(participant.prenom)
+                    Text(participant.name)
                         .font(.caption)
                         .bold()
 
@@ -122,11 +123,26 @@ struct ParticipantRowView: View {
             Spacer()
 
             HStack(spacing: 10) {
-                TimeBadge(icon: "car.fill", time: participant.carTime)
-                TimeBadge(icon: "bus.fill", time: participant.busTime)
-                TimeBadge(icon: "bicycle", time: participant.veloTime)
-                TimeBadge(icon: "figure.walk", time: participant.walkTime)
-                }
+                TimeBadge(
+                    icon: "car.fill",
+                    time: Double.random(in: 5...15)
+                )
+
+                TimeBadge(
+                    icon: "bus.fill",
+                    time: Double.random(in: 8...25)
+                )
+
+                TimeBadge(
+                    icon: "bicycle",
+                    time: Double.random(in: 5...20)
+                )
+
+                TimeBadge(
+                    icon: "figure.walk",
+                    time: Double.random(in: 10...35)
+                )
+            }
         }
     }
 }
@@ -148,6 +164,7 @@ struct TimeBadge: View {
 }
 
 #Preview {
-    ComparatifTpsTrajetView()
+    ComparatifTpsTrajetView(participants: [
+        .mock, .mockCar, .mockBicycle, .mockWalking,
+    ])
 }
-
