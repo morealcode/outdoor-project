@@ -49,6 +49,7 @@ extension MeetupGroup {
         let restaurants = await findRestaurants(
             around: center,
             participants: participants,
+            groupName: name,
             radius: 2_000,
             limit: 5
         )
@@ -148,6 +149,7 @@ extension MeetupGroup {
     static func findRestaurants(
         around center: GeoPoint,
         participants: [Participant],
+        groupName: String,
         radius: CLLocationDistance = 2_000,
         limit: Int = 5
     ) async -> [Place] {
@@ -186,7 +188,7 @@ extension MeetupGroup {
                     && $0.response.shouldAffectMeetingLocation
             }
 
-            let etaBudget = 40
+            let etaBudget = 15
             let absoluteMaxCandidates = 12
 
             let maxCandidatesToEvaluate = min(
@@ -280,7 +282,9 @@ extension MeetupGroup {
                 .prefix(limit)
                 .map(\.place)
 
-            print("\n🏆 MEILLEURS LIEUX")
+            print(
+                "\n🏆 MEILLEURS LIEUX POUR LE GROUPE \(groupName.uppercased())"
+            )
 
             for (index, evaluation)
                 in sortedEvaluations
