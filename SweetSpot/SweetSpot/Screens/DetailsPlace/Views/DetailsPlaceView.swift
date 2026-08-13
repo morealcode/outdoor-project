@@ -15,18 +15,19 @@ struct DetailsPlaceView: View {
         
         ScrollView{
             
-            CarousselView()
-            
-            PlaceView()
-            
-            ComparatifTpsTrajetView()
-            
-            LocationInterestView(styleLieux: styleLieux)
-            
+            VStack(spacing: 20) {
+                
+                CarousselView()
+                
+                PlaceView()
+                
+                ComparatifTpsTrajetView()
+                
+                LocationInterestView(styleLieux: styleLieux)
+            }
+            .padding()
         }
         .background(.backgroundApp)
-        .padding()
-        
     }
 }
 
