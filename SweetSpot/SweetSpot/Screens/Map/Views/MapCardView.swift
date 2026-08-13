@@ -9,19 +9,30 @@ import SwiftUI
 
 struct MapCardView: View {
 
+    let participants: [Participant]
+
     var body: some View {
         VStack(spacing: 16) {
+
             MeetingZoneCardHeader()
-            MeetingZoneStats()
+
+            MeetingZoneStats(
+                participants: participants
+            )
+
             MeetingZoneDescription()
-            MeetingZoneMainButton()
         }
         .padding(16)
         .background(.white)
         .clipShape(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(
+                cornerRadius: 16
+            )
         )
-        .shadow(color: .black.opacity(0.25), radius: 12, x: 0, y: 0)
+        .shadow(
+            color: .black.opacity(0.25),
+            radius: 12
+        )
     }
 }
 
@@ -32,21 +43,31 @@ struct MeetingZoneCardHeader: View {
     var body: some View {
         HStack(spacing: 12) {
 
-            Image(systemName: "mappin.and.ellipse")
-                .font(.title2)
-                .padding()
-                .background(
-                    Color(red: 0.02, green: 0.56, blue: 0.62).opacity(0.08)
+            Image(
+                systemName: "mappin.and.ellipse"
+            )
+            .font(.title2)
+            .padding()
+            .background(
+                Color(
+                    red: 0.02,
+                    green: 0.56,
+                    blue: 0.62
                 )
-                .cornerRadius(16)
-                .foregroundStyle(.accentGreen)
+                .opacity(0.08)
+            )
+            .cornerRadius(16)
+            .foregroundStyle(.accentGreen)
 
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(
+                alignment: .leading,
+                spacing: 5
+            ) {
 
                 Text("Zone optimale")
                     .font(.title3.bold())
 
-                Text("Place des Victoires, 75002 Paris")
+                Text("Point de rencontre calculé")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -59,6 +80,15 @@ struct MeetingZoneCardHeader: View {
 // MARK: - Stats
 
 struct MeetingZoneStats: View {
+
+    let participants: [Participant]
+
+    private var participantsWithLocation: Int {
+        participants.filter {
+            $0.location != nil
+        }
+        .count
+    }
 
     var body: some View {
         HStack {
@@ -84,7 +114,7 @@ struct MeetingZoneStats: View {
             StatView(
                 icon: "person.2",
                 title: "Participants",
-                value: "12"
+                value: "\(participantsWithLocation)"
             )
         }
     }
@@ -97,9 +127,11 @@ struct MeetingZoneDescription: View {
     var body: some View {
         HStack(spacing: 14) {
 
-            Image(systemName: "sparkles")
-                .font(.title3)
-                .foregroundStyle(.teal)
+            Image(
+                systemName: "sparkles"
+            )
+            .font(.title3)
+            .foregroundStyle(.teal)
 
             Text(
                 "Ce point minimise le temps de trajet total pour tout le groupe."
@@ -109,49 +141,29 @@ struct MeetingZoneDescription: View {
             Spacer()
         }
         .padding()
-        .background(.cyan.opacity(0.08))
-        .clipShape(
-            RoundedRectangle(cornerRadius: 12)
+        .background(
+            .cyan.opacity(0.08)
         )
-    }
-}
-
-// MARK: - Main Button
-
-struct MeetingZoneMainButton: View {
-
-    var body: some View {
-        Button {
-            print("Utiliser ce point")
-        } label: {
-
-            Label(
-                "Utiliser ce point de rendez-vous",
-                systemImage: "paperplane"
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: 12
             )
-            .font(.headline)
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .frame(height: 60)
-            .background(
-                LinearGradient(
-                    colors: [.accent, .accentBlue],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-            .clipShape(
-                RoundedRectangle(cornerRadius: 12)
-            )
-            .shadow(color: .black.opacity(0.25), radius: 12, x: 0, y: 0)
-        }
+        )
     }
 }
 
 // MARK: - Preview
 
 #Preview {
-    MapCardView()
-        .padding()
-        .background(.gray.opacity(0.2))
+    MapCardView(
+        participants: [
+            .mock,
+            .mockWalking,
+            .mockBicycle,
+        ]
+    )
+    .padding()
+    .background(
+        .gray.opacity(0.2)
+    )
 }
