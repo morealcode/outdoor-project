@@ -45,7 +45,3 @@ struct VoteRow: View {
 #Preview {
     VoteRow()
 }
-
-#Preview {
-    RecapitulatifView()
-}

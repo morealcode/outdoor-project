@@ -41,7 +41,3 @@ struct StepTile: View {
         currentSituation: "3 Rue de la Paix, 75002 Paris"
     )
 }
-
-#Preview {
-    RecapitulatifView()
-}

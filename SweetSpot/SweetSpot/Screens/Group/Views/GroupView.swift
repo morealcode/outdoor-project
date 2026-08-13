@@ -54,7 +54,7 @@ struct GroupView: View {
                 title: "Voir les détails de l'évènement",
                 systemImage: "chevron.right"
             ) {
-                
+                showEventDetails = true
             }
         }
         .padding()
@@ -66,7 +66,7 @@ struct GroupView: View {
             }
         }
         .navigationDestination(isPresented: $showEventDetails) {
-            EmptyView()
+            SummaryView()
         }
         .navigationDestination(isPresented: $showEditEvent) {
             if let event = viewModel.event,

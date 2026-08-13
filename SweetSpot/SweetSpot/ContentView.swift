@@ -55,7 +55,7 @@ struct ContentView: View {
 #Preview {
 //    ContentView()
 //        .environment(MockData.makeStore())
-         ContentViewPreview() // pour alexis
+         ContentViewPreview() // pour la V2
 }
 
 private struct ContentViewPreview: View {
