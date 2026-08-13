@@ -8,127 +8,174 @@
 import SwiftUI
 
 struct NewEventView: View {
-    
+
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
-    
-    @State private var viewModel: NewEventViewModel
-    
-    let groupID: UUID
-    private let eventToEdit: MeetupEvent?
-    
-    init(groupID: UUID) {
-        self.groupID = groupID
-        self.eventToEdit = nil
-        self._viewModel = State(
-            initialValue: NewEventViewModel()
-        )
-    }
-    
+
+    let groupID: UUID?
+
+    @State private var viewModel: NewEventViewModel?
+
     init(
-        groupID: UUID,
-        event: MeetupEvent
+        groupID: UUID? = nil
     ) {
         self.groupID = groupID
-        self.eventToEdit = event
-        
-        let model = NewEventViewModel()
-        model.load(event: event)
-        
-        self._viewModel = State(
-            initialValue: model
-        )
     }
-    
+
     var body: some View {
-        
-        ScrollView {
-            VStack(spacing: 16) {
-                
-                illustration
-                titleSection
-                eventNameField
-                
-                EventDateAndTimeCard(
-                    selectedDate: $viewModel.selectedDate
+        Group {
+
+            if let viewModel {
+
+                eventContent(
+                    viewModel: viewModel
                 )
-                
-                InvitationLinkCard(
-                    invitationLink: viewModel.invitationLink
+
+            } else {
+
+                ProgressView(
+                    "Chargement..."
                 )
-                
-                InfoBanner()
-                
-                PrimaryButton(
-                    title: viewModel.isEditing
-                        ? "Enregistrer les modifications"
-                        : "Créer l'évènement",
-                    systemImage: "chevron.right"
-                ) {
-                    saveEvent()
-                }
-                .disabled(!viewModel.isFormValid)
             }
-            .padding()
         }
-        .overlay(alignment: .topLeading) {
-            header
+        .task {
+            setupViewModel()
         }
-        .scrollIndicators(.hidden)
         .navigationBarBackButtonHidden()
     }
 }
 
-private extension NewEventView {
-    
-    func saveEvent() {
-        
-        if let event = eventToEdit {
-            
-            var updatedEvent = event
-            
-            updatedEvent.name = viewModel.eventName
-            updatedEvent.date = viewModel.selectedDate
-            
-            store.updateEvent(
-                updatedEvent,
-                for: groupID
-            )
-            
-        } else {
-            
-            let event = viewModel.createEvent()
-            
-            store.createEvent(
-                event,
-                for: groupID
-            )
+// MARK: - Content
+
+extension NewEventView {
+
+    @ViewBuilder
+    fileprivate func eventContent(
+        viewModel: NewEventViewModel
+    ) -> some View {
+
+        @Bindable var viewModel = viewModel
+
+        ScrollView {
+            VStack(spacing: 16) {
+
+                illustration
+
+                titleSection(
+                    isEditing: viewModel.isEditing
+                )
+
+                CustomTextField(
+                    text: $viewModel.eventName,
+                    title: "Nom de l'évènement",
+                    placeholder: "Ex : Anniversaire Lucas"
+                )
+
+                EventDateAndTimeCard(
+                    selectedDate: $viewModel.selectedDate
+                )
+
+                InvitationLinkCard(
+                    invitationLink: viewModel.invitationLink
+                )
+
+                InfoBanner()
+
+                PrimaryButton(
+                    title: viewModel.isEditing
+                        ? "Enregistrer les modifications"
+                        : "Créer l'évènement",
+                    systemImage: viewModel.isEditing
+                        ? "checkmark"
+                        : "chevron.right"
+                ) {
+                    saveEvent(
+                        with: viewModel
+                    )
+                }
+                .disabled(
+                    !viewModel.isFormValid
+                )
+                .opacity(
+                    viewModel.isFormValid
+                        ? 1
+                        : 0.5
+                )
+            }
+            .padding()
         }
-        
+        .scrollIndicators(.hidden)
+        .overlay(
+            alignment: .topLeading
+        ) {
+            header
+        }
+    }
+}
+
+// MARK: - Setup
+
+extension NewEventView {
+
+    fileprivate func setupViewModel() {
+
+        guard viewModel == nil else {
+            return
+        }
+
+        viewModel = NewEventViewModel(
+            store: store,
+            groupID: groupID
+        )
+    }
+}
+
+// MARK: - Save
+
+extension NewEventView {
+
+    fileprivate func saveEvent(
+        with viewModel: NewEventViewModel
+    ) {
+
+        guard viewModel.isFormValid else {
+            return
+        }
+
+        viewModel.save()
+
         dismiss()
     }
 }
 
-private extension NewEventView {
-    
-    var header: some View {
+// MARK: - Header
+
+extension NewEventView {
+
+    fileprivate var header: some View {
         HStack {
+
             Button {
                 dismiss()
             } label: {
-                Image(systemName: "chevron.left")
-                    .font(.headline)
-                    .padding()
+                Image(
+                    systemName: "chevron.left"
+                )
+                .font(.headline)
+                .foregroundStyle(.primary)
+                .padding()
             }
-            
+
             Spacer()
         }
     }
 }
 
-private extension NewEventView {
-    
-    var illustration: some View {
+// MARK: - Illustration
+
+extension NewEventView {
+
+    fileprivate var illustration: some View {
         Image("newEventHeader")
             .resizable()
             .scaledToFit()
@@ -136,20 +183,30 @@ private extension NewEventView {
     }
 }
 
-private extension NewEventView {
-    
-    var titleSection: some View {
+// MARK: - Title
+
+extension NewEventView {
+
+    fileprivate func titleSection(
+        isEditing: Bool
+    ) -> some View {
+
         VStack(spacing: 8) {
-            
+
             Text(
-                viewModel.isEditing
+                isEditing
                     ? "Modifier l'évènement"
                     : "Créer un évènement"
             )
-            .font(.system(size: 38, weight: .bold))
-            
+            .font(
+                .system(
+                    size: 38,
+                    weight: .bold
+                )
+            )
+
             Text(
-                viewModel.isEditing
+                isEditing
                     ? "Modifiez les informations de votre évènement."
                     : "Planifions le meilleur point de rencontre pour tout le monde."
             )
@@ -160,23 +217,69 @@ private extension NewEventView {
     }
 }
 
-private extension NewEventView {
-    
-    var eventNameField: some View {
-        CustomTextField(
-            text: $viewModel.eventName,
-            title: "Nom de l'évènement",
-            placeholder: "Ex : Soirée d'anniversaire Lucas"
-        )
-    }
+// MARK: - Preview
+
+#Preview("Création") {
+    NewEventViewPreview(
+        mode: .create
+    )
 }
 
-#Preview {
-    
-    let store = MockData.makeStore()
-    
-    NavigationStack {
-        NewEventView(groupID: UUID())
+#Preview("Modification") {
+    NewEventViewPreview(
+        mode: .edit
+    )
+}
+
+private struct NewEventViewPreview: View {
+
+    enum Mode {
+        case create
+        case edit
     }
-    .environment(store)
+
+    let mode: Mode
+
+    @State private var store: AppStore?
+
+    var body: some View {
+        Group {
+
+            if let store {
+
+                NavigationStack {
+
+                    switch mode {
+
+                    case .create:
+
+                        NewEventView()
+
+                    case .edit:
+
+                        if let group = store.groups.first {
+                            NewEventView(
+                                groupID: group.id
+                            )
+                        } else {
+                            ContentUnavailableView(
+                                "Aucun groupe",
+                                systemImage: "person.3"
+                            )
+                        }
+                    }
+                }
+                .environment(store)
+
+            } else {
+
+                ProgressView(
+                    "Chargement..."
+                )
+            }
+        }
+        .task {
+            store = await MockDataV2.makeStore()
+        }
+    }
 }
