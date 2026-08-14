@@ -31,7 +31,7 @@ struct SummaryView: View {
                 }
                 .padding(.horizontal)
             }
-            .padding(.vertical)
+            .padding()
         }
         .background(.backgroundApp)
         .navigationDestination(
